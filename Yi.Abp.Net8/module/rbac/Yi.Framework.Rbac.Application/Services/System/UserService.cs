@@ -1,13 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using SqlSugar;
-using TencentCloud.Tcr.V20190924.Models;
-using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Caching;
 using Volo.Abp.EventBus.Local;
 using Volo.Abp.Users;
-using Yi.Framework.Bbs.Domain.Shared.Enums;
-using Yi.Framework.Bbs.Domain.Shared.Etos;
 using Yi.Framework.Ddd.Application;
 using Yi.Framework.Rbac.Application.Contracts.Dtos.User;
 using Yi.Framework.Rbac.Application.Contracts.IServices;
@@ -17,7 +13,6 @@ using Yi.Framework.Rbac.Domain.Managers;
 using Yi.Framework.Rbac.Domain.Repositories;
 using Yi.Framework.Rbac.Domain.Shared.Caches;
 using Yi.Framework.Rbac.Domain.Shared.Consts;
-using Yi.Framework.Rbac.Domain.Shared.Etos;
 using Yi.Framework.Rbac.Domain.Shared.OperLog;
 using Yi.Framework.SqlSugarCore.Abstractions;
 
@@ -186,14 +181,6 @@ namespace Yi.Framework.Rbac.Application.Services.System
 
             await _repository.UpdateAsync(entity);
             var dto = await MapToGetOutputDtoAsync(entity);
-            //发布更新昵称任务事件
-            if (input.Nick != entity.Icon)
-            {
-                await this.LocalEventBus.PublishAsync(
-                    new AssignmentEventArgs(AssignmentRequirementTypeEnum.UpdateNick, _currentUser.GetId(), input.Nick),
-                    false);
-            }
-
             return dto;
         }
 

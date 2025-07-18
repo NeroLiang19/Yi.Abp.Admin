@@ -7,20 +7,20 @@ using Volo.Abp.Users;
 namespace Yi.Framework.BackgroundWorkers.Hangfire;
 
 /// <summary>
-/// Hangfire 仪表盘的令牌认证过滤器
+///     Hangfire 仪表盘的令牌认证过滤器
 /// </summary>
 public sealed class YiTokenAuthorizationFilter : IDashboardAsyncAuthorizationFilter, ITransientDependency
 {
     private const string BearerPrefix = "Bearer ";
     private const string TokenCookieKey = "Token";
     private const string HtmlContentType = "text/html";
-    
+
     private readonly IServiceProvider _serviceProvider;
     private string _requiredUsername = "cc";
     private TimeSpan _tokenExpiration = TimeSpan.FromMinutes(10);
 
     /// <summary>
-    /// 初始化令牌认证过滤器
+    ///     初始化令牌认证过滤器
     /// </summary>
     /// <param name="serviceProvider">服务提供者</param>
     public YiTokenAuthorizationFilter(IServiceProvider serviceProvider)
@@ -28,8 +28,13 @@ public sealed class YiTokenAuthorizationFilter : IDashboardAsyncAuthorizationFil
         _serviceProvider = serviceProvider;
     }
 
+    public Task<bool> AuthorizeAsync(DashboardContext context)
+    {
+        return Task.FromResult(Authorize(context));
+    }
+
     /// <summary>
-    /// 设置需要的用户名
+    ///     设置需要的用户名
     /// </summary>
     /// <param name="username">允许访问的用户名</param>
     /// <returns>当前实例，支持链式调用</returns>
@@ -40,7 +45,7 @@ public sealed class YiTokenAuthorizationFilter : IDashboardAsyncAuthorizationFil
     }
 
     /// <summary>
-    /// 设置令牌过期时间
+    ///     设置令牌过期时间
     /// </summary>
     /// <param name="expiration">过期时间间隔</param>
     /// <returns>当前实例，支持链式调用</returns>
@@ -51,7 +56,7 @@ public sealed class YiTokenAuthorizationFilter : IDashboardAsyncAuthorizationFil
     }
 
     /// <summary>
-    /// 授权验证
+    ///     授权验证
     /// </summary>
     /// <param name="context">仪表盘上下文</param>
     /// <returns>是否通过授权</returns>
@@ -78,15 +83,15 @@ public sealed class YiTokenAuthorizationFilter : IDashboardAsyncAuthorizationFil
     }
 
     /// <summary>
-    /// 设置认证挑战响应
-    /// 当用户未认证时，返回一个包含令牌输入表单的HTML页面
+    ///     设置认证挑战响应
+    ///     当用户未认证时，返回一个包含令牌输入表单的HTML页面
     /// </summary>
     /// <param name="httpContext">HTTP 上下文</param>
     private void SetChallengeResponse(HttpContext httpContext)
     {
         httpContext.Response.StatusCode = 401;
         httpContext.Response.ContentType = HtmlContentType;
-        
+
         var html = @"
             <html>
             <head>
@@ -124,7 +129,7 @@ public sealed class YiTokenAuthorizationFilter : IDashboardAsyncAuthorizationFil
     }
 
     /// <summary>
-    /// 设置令牌 Cookie
+    ///     设置令牌 Cookie
     /// </summary>
     /// <param name="httpContext">HTTP 上下文</param>
     /// <param name="token">令牌值</param>
@@ -139,10 +144,5 @@ public sealed class YiTokenAuthorizationFilter : IDashboardAsyncAuthorizationFil
         };
 
         httpContext.Response.Cookies.Append(TokenCookieKey, token, cookieOptions);
-    }
-
-    public Task<bool> AuthorizeAsync(DashboardContext context)
-    {
-        return Task.FromResult(Authorize(context));
     }
 }

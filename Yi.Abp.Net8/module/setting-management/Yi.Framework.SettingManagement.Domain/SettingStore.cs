@@ -1,18 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Volo.Abp.DependencyInjection;
+﻿using Volo.Abp.DependencyInjection;
 using Volo.Abp.Settings;
 
 namespace Yi.Framework.SettingManagement.Domain;
 
 public class SettingStore : ISettingStore, ITransientDependency
 {
-    protected ISettingManagementStore ManagementStore { get; }
-
     public SettingStore(ISettingManagementStore managementStore)
     {
         ManagementStore = managementStore;
     }
+
+    protected ISettingManagementStore ManagementStore { get; }
 
     public virtual Task<string> GetOrNullAsync(string name, string providerName, string providerKey)
     {

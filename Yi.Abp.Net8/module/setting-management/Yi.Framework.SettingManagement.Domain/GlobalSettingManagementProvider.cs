@@ -5,13 +5,12 @@ namespace Yi.Framework.SettingManagement.Domain;
 
 public class GlobalSettingManagementProvider : SettingManagementProvider, ITransientDependency
 {
-    public override string Name => GlobalSettingValueProvider.ProviderName;
-
     public GlobalSettingManagementProvider(ISettingManagementStore settingManagementStore)
         : base(settingManagementStore)
     {
-
     }
+
+    public override string Name => GlobalSettingValueProvider.ProviderName;
 
     protected override string NormalizeProviderKey(string providerKey)
     {

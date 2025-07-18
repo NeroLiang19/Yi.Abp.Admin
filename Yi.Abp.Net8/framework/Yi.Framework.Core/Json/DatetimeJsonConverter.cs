@@ -4,14 +4,14 @@ using System.Text.Json.Serialization;
 namespace Yi.Framework.Core.Json;
 
 /// <summary>
-/// DateTime JSON序列化转换器
+///     DateTime JSON序列化转换器
 /// </summary>
 public class DatetimeJsonConverter : JsonConverter<DateTime>
 {
     private readonly string _dateFormat;
 
     /// <summary>
-    /// 初始化DateTime转换器
+    ///     初始化DateTime转换器
     /// </summary>
     /// <param name="format">日期格式化字符串,默认为yyyy-MM-dd HH:mm:ss</param>
     public DatetimeJsonConverter(string format = "yyyy-MM-dd HH:mm:ss")
@@ -20,7 +20,7 @@ public class DatetimeJsonConverter : JsonConverter<DateTime>
     }
 
     /// <summary>
-    /// 从JSON读取DateTime值
+    ///     从JSON读取DateTime值
     /// </summary>
     /// <param name="reader">JSON读取器</param>
     /// <param name="typeToConvert">目标类型</param>
@@ -29,16 +29,14 @@ public class DatetimeJsonConverter : JsonConverter<DateTime>
     public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         if (reader.TokenType == JsonTokenType.String)
-        {
-            return DateTime.TryParse(reader.GetString(), out DateTime dateTime) 
-                ? dateTime 
+            return DateTime.TryParse(reader.GetString(), out var dateTime)
+                ? dateTime
                 : reader.GetDateTime();
-        }
         return reader.GetDateTime();
     }
 
     /// <summary>
-    /// 将DateTime写入JSON
+    ///     将DateTime写入JSON
     /// </summary>
     /// <param name="writer">JSON写入器</param>
     /// <param name="value">DateTime值</param>

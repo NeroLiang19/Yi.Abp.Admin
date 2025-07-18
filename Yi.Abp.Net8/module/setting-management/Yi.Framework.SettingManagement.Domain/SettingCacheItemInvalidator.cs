@@ -1,19 +1,19 @@
-﻿using System.Threading.Tasks;
-using Volo.Abp.Caching;
+﻿using Volo.Abp.Caching;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Entities.Events;
 using Volo.Abp.EventBus;
 
 namespace Yi.Framework.SettingManagement.Domain;
 
-public class SettingCacheItemInvalidator : ILocalEventHandler<EntityChangedEventData<SettingAggregateRoot>>, ITransientDependency
+public class SettingCacheItemInvalidator : ILocalEventHandler<EntityChangedEventData<SettingAggregateRoot>>,
+    ITransientDependency
 {
-    protected IDistributedCache<SettingCacheItem> Cache { get; }
-
     public SettingCacheItemInvalidator(IDistributedCache<SettingCacheItem> cache)
     {
         Cache = cache;
     }
+
+    protected IDistributedCache<SettingCacheItem> Cache { get; }
 
     public virtual async Task HandleEventAsync(EntityChangedEventData<SettingAggregateRoot> eventData)
     {

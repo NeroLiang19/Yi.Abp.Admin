@@ -1,6 +1,5 @@
-﻿namespace Yi.Framework.Rbac.Application.Contracts.IServices
+﻿namespace Yi.Framework.Rbac.Application.Contracts.IServices;
+
+public interface ITaskService
 {
-    public interface ITaskService
-    {
-    }
 }

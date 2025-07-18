@@ -1,6 +1,5 @@
 using Yi.Abp.Tool.Web;
 
-
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseUrls(builder.Configuration["App:SelfUrl"]);
 builder.Host.UseAutofac();

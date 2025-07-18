@@ -1,16 +1,7 @@
 ﻿namespace Yi.Framework.WeChat.MiniProgram;
 
-public class WeChatMiniProgramException: Exception
+public class WeChatMiniProgramException : Exception
 {
-    public override string Message
-    {
-        get
-        {
-            // 加上前缀
-            return "微信Api异常: " + base.Message;
-        }
-    }
-
     public WeChatMiniProgramException()
     {
     }
@@ -24,4 +15,8 @@ public class WeChatMiniProgramException: Exception
         : base(message, innerException)
     {
     }
+
+    public override string Message =>
+        // 加上前缀
+        "微信Api异常: " + base.Message;
 }

@@ -7,7 +7,7 @@ namespace Yi.Framework.WeChat.MiniProgram;
 
 [DependsOn(typeof(YiFrameworkCoreModule),
     typeof(AbpCachingModule))]
-public class YiFrameworkWeChatMiniProgramModule: AbpModule
+public class YiFrameworkWeChatMiniProgramModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
     {

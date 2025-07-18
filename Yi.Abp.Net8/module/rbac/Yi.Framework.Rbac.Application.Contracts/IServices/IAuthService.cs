@@ -1,5 +1,4 @@
-﻿using Volo.Abp.Application.Dtos;
-using Yi.Framework.Rbac.Application.Contracts.Dtos.Account;
+﻿using Yi.Framework.Rbac.Application.Contracts.Dtos.Account;
 
 namespace Yi.Framework.Rbac.Application.Contracts.IServices;
 

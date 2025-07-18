@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Yi.Framework.SqlSugarCore.Abstractions;
 
 namespace Yi.Framework.SqlSugarCore;
 
 /// <summary>
-/// SqlSugar Core扩展方法
+///     SqlSugar Core扩展方法
 /// </summary>
 public static class SqlSugarCoreExtensions
 {
     /// <summary>
-    /// 添加数据库上下文
+    ///     添加数据库上下文
     /// </summary>
     /// <typeparam name="TDbContext">数据库上下文类型</typeparam>
     /// <param name="services">服务集合</param>
@@ -23,7 +17,7 @@ public static class SqlSugarCoreExtensions
     /// <returns>服务集合</returns>
     public static IServiceCollection AddYiDbContext<TDbContext>(
         this IServiceCollection services,
-        ServiceLifetime serviceLifetime = ServiceLifetime.Transient) 
+        ServiceLifetime serviceLifetime = ServiceLifetime.Transient)
         where TDbContext : class, ISqlSugarDbContextDependencies
     {
         services.Add(new ServiceDescriptor(
@@ -35,7 +29,7 @@ public static class SqlSugarCoreExtensions
     }
 
     /// <summary>
-    /// 添加数据库上下文并配置选项
+    ///     添加数据库上下文并配置选项
     /// </summary>
     /// <typeparam name="TDbContext">数据库上下文类型</typeparam>
     /// <param name="services">服务集合</param>

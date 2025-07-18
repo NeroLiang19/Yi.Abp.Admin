@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using Volo.Abp;
-using Volo.Abp.DependencyInjection;
+﻿using Volo.Abp.DependencyInjection;
 using Volo.Abp.Settings;
 
 namespace Yi.Framework.SettingManagement.Domain;
@@ -16,11 +14,13 @@ public class DefaultValueSettingManagementProvider : ISettingManagementProvider,
 
     public virtual Task SetAsync(SettingDefinition setting, string value, string providerKey)
     {
-        throw new AbpException($"Can not set default value of a setting. It is only possible while defining the setting in a {typeof(ISettingDefinitionProvider)} implementation.");
+        throw new AbpException(
+            $"Can not set default value of a setting. It is only possible while defining the setting in a {typeof(ISettingDefinitionProvider)} implementation.");
     }
 
     public virtual Task ClearAsync(SettingDefinition setting, string providerKey)
     {
-        throw new AbpException($"Can not clear default value of a setting. It is only possible while defining the setting in a {typeof(ISettingDefinitionProvider)} implementation.");
+        throw new AbpException(
+            $"Can not clear default value of a setting. It is only possible while defining the setting in a {typeof(ISettingDefinitionProvider)} implementation.");
     }
 }

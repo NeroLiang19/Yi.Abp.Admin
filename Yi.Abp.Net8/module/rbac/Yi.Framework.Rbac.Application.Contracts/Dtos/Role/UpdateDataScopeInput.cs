@@ -1,13 +1,12 @@
 ﻿using Yi.Framework.Rbac.Domain.Shared.Enums;
 
-namespace Yi.Framework.Rbac.Application.Contracts.Dtos.Role
+namespace Yi.Framework.Rbac.Application.Contracts.Dtos.Role;
+
+public class UpdateDataScopeInput
 {
-    public class UpdateDataScopeInput
-    {
-        public Guid RoleId { get; set; }
+    public Guid RoleId { get; set; }
 
-        public List<Guid>? DeptIds { get; set; }
+    public List<Guid>? DeptIds { get; set; }
 
-        public DataScopeEnum DataScope { get; set; }
-    }
+    public DataScopeEnum DataScope { get; set; }
 }

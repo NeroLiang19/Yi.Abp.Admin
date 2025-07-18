@@ -2,15 +2,14 @@
 using Shouldly;
 using Xunit;
 
-namespace Yi.Abp.Test.example
+namespace Yi.Abp.Test.example;
+
+public class HttpUser_Test : YiAbpTestWebBase
 {
-    public class HttpUser_Test : YiAbpTestWebBase
+    [Fact]
+    public void Http_Test()
     {
-        [Fact]
-        public void Http_Test()
-        {
-            var httpContext = GetRequiredService<IHttpContextAccessor>();
-            httpContext.HttpContext.Request.Path.ToString().ShouldBe("/test");
-        }
+        var httpContext = GetRequiredService<IHttpContextAccessor>();
+        httpContext.HttpContext.Request.Path.ToString().ShouldBe("/test");
     }
 }

@@ -1,12 +1,11 @@
-﻿namespace Yi.Framework.Rbac.Application.Contracts.Dtos.Account
+﻿namespace Yi.Framework.Rbac.Application.Contracts.Dtos.Account;
+
+public class LoginInputVo
 {
-    public class LoginInputVo
-    {
-        public string UserName { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
+    public string UserName { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
 
-        public string? Uuid { get; set; }
+    public string? Uuid { get; set; }
 
-        public string? Code { get; set; }
-    }
+    public string? Code { get; set; }
 }

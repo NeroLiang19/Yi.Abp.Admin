@@ -1,29 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Yi.Framework.Rbac.Domain.Shared.Dtos;
+﻿using Yi.Framework.Rbac.Domain.Shared.Dtos;
 
-namespace Yi.Framework.Rbac.Domain.Shared.Caches
+namespace Yi.Framework.Rbac.Domain.Shared.Caches;
+
+public class UserInfoCacheItem
 {
-    public class UserInfoCacheItem
+    public UserInfoCacheItem(UserRoleMenuDto info)
     {
-        public UserInfoCacheItem(UserRoleMenuDto info) { Info = info; }
-        /// <summary>
-        /// 存储的用户信息
-        /// </summary>
-        public UserRoleMenuDto Info { get; set; }
+        Info = info;
     }
-    public class UserInfoCacheKey
+
+    /// <summary>
+    ///     存储的用户信息
+    /// </summary>
+    public UserRoleMenuDto Info { get; set; }
+}
+
+public class UserInfoCacheKey
+{
+    public UserInfoCacheKey(Guid userId)
     {
-        public UserInfoCacheKey(Guid userId) { UserId = userId; }
+        UserId = userId;
+    }
 
-        public Guid UserId { get; set; }
+    public Guid UserId { get; set; }
 
-        public override string ToString()
-        {
-            return $"User:{UserId}";
-        }
+    public override string ToString()
+    {
+        return $"User:{UserId}";
     }
 }

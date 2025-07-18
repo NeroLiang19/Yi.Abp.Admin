@@ -1,7 +1,6 @@
-﻿namespace Yi.Framework.Rbac.Domain.Authorization
+﻿namespace Yi.Framework.Rbac.Domain.Authorization;
+
+public interface IPermissionHandler
 {
-    public interface IPermissionHandler
-    {
-        bool IsPass(string permission);
-    }
+    bool IsPass(string permission);
 }

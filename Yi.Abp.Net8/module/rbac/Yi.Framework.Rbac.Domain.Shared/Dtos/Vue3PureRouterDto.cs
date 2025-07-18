@@ -6,8 +6,8 @@ public class Vue3PureRouterDto
     public Guid ParentId { get; set; }
     public string Path { get; set; }
     public string Name { get; set; }
-    public MetaPureRouterDto Meta { get; set; } = new MetaPureRouterDto();
-    
+    public MetaPureRouterDto Meta { get; set; } = new();
+
     public string? component { get; set; }
     public List<Vue3PureRouterDto>? Children { get; set; }
 }

@@ -6,24 +6,24 @@ using Volo.Abp.AspNetCore.WebClientInfo;
 namespace Yi.Framework.AspNetCore;
 
 /// <summary>
-/// 真实IP地址提供程序,支持代理服务器场景
+///     真实IP地址提供程序,支持代理服务器场景
 /// </summary>
 public class RealIpHttpContextWebClientInfoProvider : HttpContextWebClientInfoProvider
 {
     private const string XForwardedForHeader = "X-Forwarded-For";
 
     /// <summary>
-    /// 初始化真实IP地址提供程序的新实例
+    ///     初始化真实IP地址提供程序的新实例
     /// </summary>
     public RealIpHttpContextWebClientInfoProvider(
         ILogger<HttpContextWebClientInfoProvider> logger,
-        IHttpContextAccessor httpContextAccessor) 
+        IHttpContextAccessor httpContextAccessor)
         : base(logger, httpContextAccessor)
     {
     }
 
     /// <summary>
-    /// 获取客户端IP地址,优先从X-Forwarded-For头部获取
+    ///     获取客户端IP地址,优先从X-Forwarded-For头部获取
     /// </summary>
     /// <returns>客户端IP地址</returns>
     protected override string? GetClientIpAddress()
@@ -31,10 +31,7 @@ public class RealIpHttpContextWebClientInfoProvider : HttpContextWebClientInfoPr
         try
         {
             var httpContext = HttpContextAccessor.HttpContext;
-            if (httpContext == null)
-            {
-                return null;
-            }
+            if (httpContext == null) return null;
 
             var headers = httpContext.Request?.Headers;
             if (headers != null && headers.ContainsKey(XForwardedForHeader))
@@ -42,9 +39,7 @@ public class RealIpHttpContextWebClientInfoProvider : HttpContextWebClientInfoPr
                 // 从X-Forwarded-For获取真实客户端IP
                 var forwardedIp = headers[XForwardedForHeader].FirstOrDefault();
                 if (!string.IsNullOrEmpty(forwardedIp))
-                {
                     httpContext.Connection.RemoteIpAddress = IPAddress.Parse(forwardedIp);
-                }
             }
 
             return httpContext.Connection?.RemoteIpAddress?.ToString();

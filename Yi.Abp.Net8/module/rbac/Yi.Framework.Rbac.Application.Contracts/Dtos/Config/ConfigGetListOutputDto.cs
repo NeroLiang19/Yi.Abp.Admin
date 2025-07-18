@@ -1,40 +1,43 @@
 using Volo.Abp.Application.Dtos;
 
-namespace Yi.Framework.Rbac.Application.Contracts.Dtos.Config
+namespace Yi.Framework.Rbac.Application.Contracts.Dtos.Config;
+
+public class ConfigGetListOutputDto : EntityDto<Guid>
 {
-    public class ConfigGetListOutputDto : EntityDto<Guid>
-    {
-        public Guid Id { get; set; }
-        /// <summary>
-        /// ÅäÖÃÃû³Æ
-        /// </summary>
-        public string ConfigName { get; set; } = string.Empty;
+    public Guid Id { get; set; }
 
-        /// <summary>
-        /// ÅäÖÃÖ÷¼ü
-        /// </summary>
-        public string ConfigKey { get; set; } = string.Empty;
-        /// <summary>
-        /// ÅäÖÃÖµ
-        /// </summary>
-        public string ConfigValue { get; set; } = string.Empty;
-        /// <summary>
-        /// ÅäÖÃÀàÐÍ
-        /// </summary>
-        public string? ConfigType { get; set; }
-        /// <summary>
-        /// ÅÅÐò×Ö¶Î
-        /// </summary>
-        public int OrderNum { get; set; }
+    /// <summary>
+    ///     ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    /// </summary>
+    public string ConfigName { get; set; } = string.Empty;
 
-        /// <summary>
-        /// ±¸×¢
-        /// </summary>
-        public string? Remark { get; set; }
+    /// <summary>
+    ///     ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    /// </summary>
+    public string ConfigKey { get; set; } = string.Empty;
 
-        /// <summary>
-        /// ´´½¨Ê±¼ä
-        /// </summary>
-        public DateTime CreationTime { get; set; }
-    }
+    /// <summary>
+    ///     ï¿½ï¿½ï¿½ï¿½Öµ
+    /// </summary>
+    public string ConfigValue { get; set; } = string.Empty;
+
+    /// <summary>
+    ///     ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    /// </summary>
+    public string? ConfigType { get; set; }
+
+    /// <summary>
+    ///     ï¿½ï¿½ï¿½ï¿½ï¿½Ö¶ï¿½
+    /// </summary>
+    public int OrderNum { get; set; }
+
+    /// <summary>
+    ///     ï¿½ï¿½×¢
+    /// </summary>
+    public string? Remark { get; set; }
+
+    /// <summary>
+    ///     ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+    /// </summary>
+    public DateTime CreationTime { get; set; }
 }

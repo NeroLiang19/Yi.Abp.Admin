@@ -2,6 +2,6 @@
 
 public enum MenuSourceEnum
 {
-    Ruoyi=0,
-    Pure=1
+    Ruoyi = 0,
+    Pure = 1
 }

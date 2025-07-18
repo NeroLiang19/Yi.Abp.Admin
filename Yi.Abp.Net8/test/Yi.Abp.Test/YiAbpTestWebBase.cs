@@ -6,33 +6,40 @@ using Microsoft.Extensions.Hosting;
 
 namespace Yi.Abp.Test;
 
-public class YiAbpTestWebBase:YiAbpTestBase
+public class YiAbpTestWebBase : YiAbpTestBase
 {
-    public HttpContext HttpContext { get; private set; }
-    public YiAbpTestWebBase():base()
+    public YiAbpTestWebBase()
     {
-        HttpContext httpContext = DefaultHttpContextAccessor.CurrentHttpContext;
-        this.ConfigureHttpContext(httpContext);
+        var httpContext = DefaultHttpContextAccessor.CurrentHttpContext;
+        ConfigureHttpContext(httpContext);
         HttpContext = httpContext;
-        IApplicationBuilder app = new ApplicationBuilder(this.ServiceProvider);
-        RequestDelegate httpDelegate = app.Build();
+        IApplicationBuilder app = new ApplicationBuilder(ServiceProvider);
+        var httpDelegate = app.Build();
         httpDelegate.Invoke(httpContext);
     }
 
+    public HttpContext HttpContext { get; private set; }
+
     public override void ConfigureServices(HostBuilderContext host, IServiceCollection service)
     {
-        service.Replace(new ServiceDescriptor(typeof(IHttpContextAccessor), typeof(DefaultHttpContextAccessor), ServiceLifetime.Singleton));
+        service.Replace(new ServiceDescriptor(typeof(IHttpContextAccessor), typeof(DefaultHttpContextAccessor),
+            ServiceLifetime.Singleton));
         base.ConfigureServices(host, service);
     }
 
     protected virtual void ConfigureHttpContext(HttpContext httpContext)
     {
-        httpContext.Request.Path= "/test";
+        httpContext.Request.Path = "/test";
     }
 }
 
 internal class DefaultHttpContextAccessor : IHttpContextAccessor
 {
     internal static HttpContext? CurrentHttpContext { get; set; } = new DefaultHttpContext();
-    public HttpContext? HttpContext { get => CurrentHttpContext; set => throw new NotImplementedException(); }
+
+    public HttpContext? HttpContext
+    {
+        get => CurrentHttpContext;
+        set => throw new NotImplementedException();
+    }
 }

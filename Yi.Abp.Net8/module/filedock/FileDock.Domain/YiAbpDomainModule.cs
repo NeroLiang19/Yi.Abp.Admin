@@ -8,20 +8,18 @@ using Yi.Framework.Rbac.Domain;
 using Yi.Framework.SettingManagement.Domain;
 using Yi.Framework.TenantManagement.Domain;
 
-namespace FileDock.Domain
-{
-    [DependsOn(
-        typeof(FileDockDomainSharedModule),
-        typeof(YiFrameworkTenantManagementDomainModule),
-        typeof(YiFrameworkRbacDomainModule),
-        typeof(YiFrameworkAuditLoggingDomainModule),
-        typeof(YiFrameworkSettingManagementDomainModule),
-        typeof(YiFrameworkMapsterModule),
-        typeof(AbpDddDomainModule),
-        typeof(AbpCachingModule)
-        )]
-    public class FileDockDomainModule : AbpModule
-    {
+namespace FileDock.Domain;
 
-    }
+[DependsOn(
+    typeof(FileDockDomainSharedModule),
+    typeof(YiFrameworkTenantManagementDomainModule),
+    typeof(YiFrameworkRbacDomainModule),
+    typeof(YiFrameworkAuditLoggingDomainModule),
+    typeof(YiFrameworkSettingManagementDomainModule),
+    typeof(YiFrameworkMapsterModule),
+    typeof(AbpDddDomainModule),
+    typeof(AbpCachingModule)
+)]
+public class FileDockDomainModule : AbpModule
+{
 }

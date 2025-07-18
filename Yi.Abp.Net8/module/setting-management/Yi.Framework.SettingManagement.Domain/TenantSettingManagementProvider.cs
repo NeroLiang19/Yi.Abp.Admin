@@ -6,10 +6,6 @@ namespace Yi.Framework.SettingManagement.Domain;
 
 public class TenantSettingManagementProvider : SettingManagementProvider, ITransientDependency
 {
-    public override string Name => TenantSettingValueProvider.ProviderName;
-
-    protected ICurrentTenant CurrentTenant { get; }
-
     public TenantSettingManagementProvider(
         ISettingManagementStore settingManagementStore,
         ICurrentTenant currentTenant)
@@ -18,12 +14,13 @@ public class TenantSettingManagementProvider : SettingManagementProvider, ITrans
         CurrentTenant = currentTenant;
     }
 
+    public override string Name => TenantSettingValueProvider.ProviderName;
+
+    protected ICurrentTenant CurrentTenant { get; }
+
     protected override string NormalizeProviderKey(string providerKey)
     {
-        if (providerKey != null)
-        {
-            return providerKey;
-        }
+        if (providerKey != null) return providerKey;
 
         return CurrentTenant.Id?.ToString();
     }

@@ -1,21 +1,18 @@
-﻿using Volo.Abp.Modularity;
-using Yi.Framework.Mapster;
+﻿using Yi.Framework.Mapster;
 using Yi.Framework.Rbac.Domain;
 using Yi.Framework.SqlSugarCore;
 
-namespace Yi.Framework.Rbac.SqlSugarCore
-{
-    [DependsOn(
-        typeof(YiFrameworkRbacDomainModule),
+namespace Yi.Framework.Rbac.SqlSugarCore;
 
-        typeof(YiFrameworkMapsterModule),
-        typeof(YiFrameworkSqlSugarCoreModule)
-        )]
-    public class YiFrameworkRbacSqlSugarCoreModule : AbpModule
+[DependsOn(
+    typeof(YiFrameworkRbacDomainModule),
+    typeof(YiFrameworkMapsterModule),
+    typeof(YiFrameworkSqlSugarCoreModule)
+)]
+public class YiFrameworkRbacSqlSugarCoreModule : AbpModule
+{
+    public override void ConfigureServices(ServiceConfigurationContext context)
     {
-        public override void ConfigureServices(ServiceConfigurationContext context)
-        {
-            context.Services.AddYiDbContext<YiRbacDbContext>();
-        }
+        context.Services.AddYiDbContext<YiRbacDbContext>();
     }
 }

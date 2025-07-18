@@ -1,32 +1,32 @@
 using Mapster;
 using Yi.Framework.Rbac.Domain.Shared.Enums;
 
-namespace Yi.Framework.Rbac.Application.Contracts.Dtos.User
+namespace Yi.Framework.Rbac.Application.Contracts.Dtos.User;
+
+public class UserUpdateInputVo
 {
-    public class UserUpdateInputVo
-    {
-        public string? Name { get; set; }
-        public int? Age { get; set; }
-        public string? UserName { get; set; }
+    public string? Name { get; set; }
+    public int? Age { get; set; }
+    public string? UserName { get; set; }
 
-        /// <summary>
-        /// ¸Ã³ÉÔ±ÐèºöÂÔ
-        /// </summary>
-        [AdaptIgnore]
-        public string? Password { get; set; }
-        public string? Icon { get; set; }
-        public string? Nick { get; set; }
-        public string? Email { get; set; }
-        public string? Ip { get; set; }
-        public string? Address { get; set; }
-        public long? Phone { get; set; }
-        public string? Introduction { get; set; }
-        public string? Remark { get; set; }
-        public SexEnum? Sex { get; set; }
-        public Guid? DeptId { get; set; }
-        public List<Guid>? PostIds { get; set; }
+    /// <summary>
+    ///     ï¿½Ã³ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½
+    /// </summary>
+    [AdaptIgnore]
+    public string? Password { get; set; }
 
-        public List<Guid>? RoleIds { get; set; }
-        public bool? State { get; set; }
-    }
+    public string? Icon { get; set; }
+    public string? Nick { get; set; }
+    public string? Email { get; set; }
+    public string? Ip { get; set; }
+    public string? Address { get; set; }
+    public long? Phone { get; set; }
+    public string? Introduction { get; set; }
+    public string? Remark { get; set; }
+    public SexEnum? Sex { get; set; }
+    public Guid? DeptId { get; set; }
+    public List<Guid>? PostIds { get; set; }
+
+    public List<Guid>? RoleIds { get; set; }
+    public bool? State { get; set; }
 }

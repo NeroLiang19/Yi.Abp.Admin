@@ -7,17 +7,13 @@ namespace Yi.Framework.WeChat.MiniProgram;
 public static class WeChatMiniProgramExtensions
 {
     /// <summary>
-    /// 效验请求是否成功
+    ///     效验请求是否成功
     /// </summary>
     /// <param name="response"></param>
     /// <returns></returns>
     internal static void ValidateSuccess(this IErrorObjct response)
     {
-
-        if (response.errcode != 0)
-        {
-            throw new WeChatMiniProgramException(response.errmsg);
-        }
+        if (response.errcode != 0) throw new WeChatMiniProgramException(response.errmsg);
     }
 
     internal static string ToQueryString<T>(this T obj)
@@ -32,16 +28,10 @@ public static class WeChatMiniProgramExtensions
             {
                 // 处理集合
                 if (value is IEnumerable<object> enumerable)
-                {
                     foreach (var item in enumerable)
-                    {
                         queryParams.Add($"{HttpUtility.UrlEncode(prop.Name)}={HttpUtility.UrlEncode(item.ToString())}");
-                    }
-                }
                 else
-                {
                     queryParams.Add($"{HttpUtility.UrlEncode(prop.Name)}={HttpUtility.UrlEncode(value.ToString())}");
-                }
             }
         }
 

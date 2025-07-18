@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using Volo.Abp.AspNetCore.Mvc.ExceptionHandling;
 using Yi.Framework.AspNetCore.UnifyResult.Fiters;
 
 namespace Yi.Framework.AspNetCore.UnifyResult;
 
 /// <summary>
-/// 规范化接口
-/// 由于太多人反应，想兼容一套类似furion的返回情况，200状态码包一层更符合国内习惯，既然如此，不如直接搬过来
+///     规范化接口
+///     由于太多人反应，想兼容一套类似furion的返回情况，200状态码包一层更符合国内习惯，既然如此，不如直接搬过来
 /// </summary>
 public static class UnifyResultExtensions
 {

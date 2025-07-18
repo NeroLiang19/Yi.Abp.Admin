@@ -7,7 +7,8 @@ namespace Volo.Abp.SettingManagement.EntityFrameworkCore;
 public class SqlSugarCoreSettingRepository : SqlSugarRepository<SettingAggregateRoot, Guid>,
     ISettingRepository
 {
-    public SqlSugarCoreSettingRepository(ISugarDbContextProvider<ISqlSugarDbContext> sugarDbContextProvider) : base(sugarDbContextProvider)
+    public SqlSugarCoreSettingRepository(ISugarDbContextProvider<ISqlSugarDbContext> sugarDbContextProvider) : base(
+        sugarDbContextProvider)
     {
     }
 
@@ -29,8 +30,7 @@ public class SqlSugarCoreSettingRepository : SqlSugarRepository<SettingAggregate
         CancellationToken cancellationToken = default)
     {
         return await _DbQueryable
-            .Where(
-                s => s.ProviderName == providerName && s.ProviderKey == providerKey
+            .Where(s => s.ProviderName == providerName && s.ProviderKey == providerKey
             ).ToListAsync();
     }
 
@@ -41,8 +41,7 @@ public class SqlSugarCoreSettingRepository : SqlSugarRepository<SettingAggregate
         CancellationToken cancellationToken = default)
     {
         return await _DbQueryable
-            .Where(
-                s => names.Contains(s.Name) && s.ProviderName == providerName && s.ProviderKey == providerKey
+            .Where(s => names.Contains(s.Name) && s.ProviderName == providerName && s.ProviderKey == providerKey
             ).ToListAsync();
     }
 }

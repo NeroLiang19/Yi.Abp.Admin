@@ -6,17 +6,16 @@ using Yi.Framework.Rbac.Application;
 using Yi.Framework.SettingManagement.Application;
 using Yi.Framework.TenantManagement.Application;
 
-namespace FileDock.Application
+namespace FileDock.Application;
+
+[DependsOn(
+    typeof(FileDockApplicationContractsModule),
+    typeof(FileDockDomainModule),
+    typeof(YiFrameworkRbacApplicationModule),
+    typeof(YiFrameworkTenantManagementApplicationModule),
+    typeof(YiFrameworkSettingManagementApplicationModule),
+    typeof(YiFrameworkDddApplicationModule)
+)]
+public class FileDockApplicationModule : AbpModule
 {
-    [DependsOn(
-        typeof(FileDockApplicationContractsModule),
-        typeof(FileDockDomainModule),
-        typeof(YiFrameworkRbacApplicationModule),
-        typeof(YiFrameworkTenantManagementApplicationModule),
-        typeof (YiFrameworkSettingManagementApplicationModule),
-        typeof(YiFrameworkDddApplicationModule)
-        )]
-    public class FileDockApplicationModule : AbpModule
-    {
-    }
 }

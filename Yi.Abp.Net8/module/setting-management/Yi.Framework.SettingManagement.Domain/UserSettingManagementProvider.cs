@@ -6,10 +6,6 @@ namespace Yi.Framework.SettingManagement.Domain;
 
 public class UserSettingManagementProvider : SettingManagementProvider, ITransientDependency
 {
-    public override string Name => UserSettingValueProvider.ProviderName;
-
-    protected ICurrentUser CurrentUser { get; }
-
     public UserSettingManagementProvider(
         ISettingManagementStore settingManagementStore,
         ICurrentUser currentUser)
@@ -18,12 +14,13 @@ public class UserSettingManagementProvider : SettingManagementProvider, ITransie
         CurrentUser = currentUser;
     }
 
+    public override string Name => UserSettingValueProvider.ProviderName;
+
+    protected ICurrentUser CurrentUser { get; }
+
     protected override string NormalizeProviderKey(string providerKey)
     {
-        if (providerKey != null)
-        {
-            return providerKey;
-        }
+        if (providerKey != null) return providerKey;
 
         return CurrentUser.Id?.ToString();
     }

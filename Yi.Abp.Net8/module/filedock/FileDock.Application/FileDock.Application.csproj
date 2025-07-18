@@ -7,15 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Services\" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\..\rbac\Yi.Framework.Rbac.Application\Yi.Framework.Rbac.Application.csproj" />
-      <ProjectReference Include="..\..\setting-management\Yi.Framework.SettingManagement.Application\Yi.Framework.SettingManagement.Application.csproj" />
-      <ProjectReference Include="..\..\tenant-management\Yi.Framework.TenantManagement.Application\Yi.Framework.TenantManagement.Application.csproj" />
-      <ProjectReference Include="..\FileDock.Application.Contracts\FileDock.Application.Contracts.csproj" />
-      <ProjectReference Include="..\FileDock.Domain\FileDock.Domain.csproj" />
+        <ProjectReference Include="..\..\rbac\Yi.Framework.Rbac.Application\Yi.Framework.Rbac.Application.csproj"/>
+        <ProjectReference Include="..\..\setting-management\Yi.Framework.SettingManagement.Application\Yi.Framework.SettingManagement.Application.csproj"/>
+        <ProjectReference Include="..\..\tenant-management\Yi.Framework.TenantManagement.Application\Yi.Framework.TenantManagement.Application.csproj"/>
+        <ProjectReference Include="..\FileDock.Application.Contracts\FileDock.Application.Contracts.csproj"/>
+        <ProjectReference Include="..\FileDock.Domain\FileDock.Domain.csproj"/>
     </ItemGroup>
 
 </Project>

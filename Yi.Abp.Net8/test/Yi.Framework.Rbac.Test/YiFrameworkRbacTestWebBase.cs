@@ -1,33 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using NSubstitute.Extensions;
 
 namespace Yi.Framework.Rbac.Test
 {
     public class YiFrameworkRbacTestWebBase : YiFrameworkRbacTestBase
     {
-        public HttpContext HttpContext { get; private set; }
-        public YiFrameworkRbacTestWebBase() : base()
+        public YiFrameworkRbacTestWebBase()
         {
-            HttpContext httpContext = DefaultHttpContextAccessor.CurrentHttpContext;
+            var httpContext = DefaultHttpContextAccessor.CurrentHttpContext;
             ConfigureHttpContext(httpContext);
             HttpContext = httpContext;
             IApplicationBuilder app = new ApplicationBuilder(ServiceProvider);
-            RequestDelegate httpDelegate = app.Build();
+            var httpDelegate = app.Build();
             httpDelegate.Invoke(httpContext);
         }
 
+        public HttpContext HttpContext { get; private set; }
+
         public override void ConfigureServices(HostBuilderContext host, IServiceCollection service)
         {
-            service.Replace(new ServiceDescriptor(typeof(IHttpContextAccessor), typeof(DefaultHttpContextAccessor), ServiceLifetime.Singleton));
+            service.Replace(new ServiceDescriptor(typeof(IHttpContextAccessor), typeof(DefaultHttpContextAccessor),
+                ServiceLifetime.Singleton));
             base.ConfigureServices(host, service);
         }
 
@@ -37,8 +33,14 @@ namespace Yi.Framework.Rbac.Test
         }
     }
 }
+
 internal class DefaultHttpContextAccessor : IHttpContextAccessor
 {
     internal static HttpContext? CurrentHttpContext { get; set; } = new DefaultHttpContext();
-    public HttpContext? HttpContext { get => CurrentHttpContext; set => throw new NotImplementedException(); }
+
+    public HttpContext? HttpContext
+    {
+        get => CurrentHttpContext;
+        set => throw new NotImplementedException();
+    }
 }

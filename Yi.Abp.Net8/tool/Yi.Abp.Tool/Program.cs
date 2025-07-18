@@ -1,26 +1,25 @@
-﻿using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Yi.Abp.Tool;
-class Program
-{
-    static async Task Main(string[] args)
-    {
 
+internal class Program
+{
+    private static async Task Main(string[] args)
+    {
 #if DEBUG
-        
+
         //帮助
         //args = ["-h"];
-        
+
         //版本
         // args = ["-v"];
-        
+
         //清理
         // args = ["clear"];
-        
+
         //创建模块
         //args = ["new","oooo", "-t","module","-p","D:\\temp","-csf"];
-        
+
         //查看模板列表
         //args = ["new","list"];
         //查看子命令帮组
@@ -31,11 +30,8 @@ class Program
 #endif
         try
         {
-            IHost host = Host.CreateDefaultBuilder()
-                .ConfigureServices(async (host, service) =>
-                {
-                    await service.AddApplicationAsync<YiAbpToolModule>();
-                })
+            var host = Host.CreateDefaultBuilder()
+                .ConfigureServices(async (host, service) => { await service.AddApplicationAsync<YiAbpToolModule>(); })
                 //.ConfigureAppConfiguration(configurationBuilder =>
                 //{
                 //    configurationBuilder.AddJsonFile("appsettings.json");
@@ -51,5 +47,4 @@ class Program
             Console.WriteLine(ex.StackTrace);
         }
     }
-
 }

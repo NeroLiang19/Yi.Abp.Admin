@@ -6,8 +6,8 @@ namespace Yi.Framework.WeChat.MiniProgram.Token;
 
 internal class CacheMiniProgramToken : DefaultMinProgramToken, IMiniProgramToken
 {
-    private IDistributedCache<string> _cache;
     private const string CacheKey = "MiniProgramToken";
+    private readonly IDistributedCache<string> _cache;
 
     public CacheMiniProgramToken(IOptions<WeChatMiniProgramOptions> options, IDistributedCache<string> cache) :
         base(options)
@@ -19,7 +19,7 @@ internal class CacheMiniProgramToken : DefaultMinProgramToken, IMiniProgramToken
     {
         return await _cache.GetOrAddAsync("MiniProgramToken", async () => { return await base.GetTokenAsync(); }, () =>
         {
-            return new DistributedCacheEntryOptions()
+            return new DistributedCacheEntryOptions
             {
                 AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(2) - TimeSpan.FromMinutes(1)
             };

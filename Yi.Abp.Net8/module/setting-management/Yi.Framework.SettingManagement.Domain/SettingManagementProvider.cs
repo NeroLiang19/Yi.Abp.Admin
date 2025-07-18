@@ -1,19 +1,17 @@
-﻿using System.Threading.Tasks;
-using Volo.Abp.Settings;
+﻿using Volo.Abp.Settings;
 
 namespace Yi.Framework.SettingManagement.Domain;
 
 public abstract class SettingManagementProvider : ISettingManagementProvider
 {
-    public abstract string Name { get; }
-
-    //TODO: Rename to Store
-    protected ISettingManagementStore SettingManagementStore { get; }
-
     protected SettingManagementProvider(ISettingManagementStore settingManagementStore)
     {
         SettingManagementStore = settingManagementStore;
     }
+
+    //TODO: Rename to Store
+    protected ISettingManagementStore SettingManagementStore { get; }
+    public abstract string Name { get; }
 
     public virtual async Task<string> GetOrNullAsync(SettingDefinition setting, string providerKey)
     {

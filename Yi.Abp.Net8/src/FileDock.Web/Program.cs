@@ -5,14 +5,18 @@ using Serilog.Events;
 //创建日志,可使用{SourceContext}记录
 Log.Logger = new LoggerConfiguration()
     //由于后端处理请求中，前端请求已经结束，此类日志可不记录
-    .Filter.ByExcluding(log =>log.Exception?.GetType() == typeof(TaskCanceledException)||log.MessageTemplate.Text.Contains("\"message\": \"A task was canceled.\""))
+    .Filter.ByExcluding(log =>
+        log.Exception?.GetType() == typeof(TaskCanceledException) ||
+        log.MessageTemplate.Text.Contains("\"message\": \"A task was canceled.\""))
     .MinimumLevel.Debug()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
     .MinimumLevel.Override("Microsoft.AspNetCore.Hosting.Diagnostics", LogEventLevel.Error)
     .MinimumLevel.Override("Quartz", LogEventLevel.Warning)
     .Enrich.FromLogContext()
-    .WriteTo.Async(c => c.File("logs/all/log-.txt", rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: LogEventLevel.Debug))
-    .WriteTo.Async(c => c.File("logs/error/errorlog-.txt", rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: LogEventLevel.Error))
+    .WriteTo.Async(c => c.File("logs/all/log-.txt", rollingInterval: RollingInterval.Day,
+        restrictedToMinimumLevel: LogEventLevel.Debug))
+    .WriteTo.Async(c => c.File("logs/error/errorlog-.txt", rollingInterval: RollingInterval.Day,
+        restrictedToMinimumLevel: LogEventLevel.Error))
     .WriteTo.Async(c => c.Console())
     .CreateLogger();
 
@@ -20,14 +24,14 @@ try
 {
     Log.Information("""
 
-        __     ___   ______                                           _    
-        \ \   / (_) |  ____|                                         | |   
-         \ \_/ / _  | |__ _ __ __ _ _ __ ___   _____      _____  _ __| | __
-          \   / | | |  __| '__/ _` | '_ ` _ \ / _ \ \ /\ / / _ \| '__| |/ /
-           | |  | | | |  | | | (_| | | | | | |  __/\ V  V / (_) | |  |   < 
-           |_|  |_| |_|  |_|  \__,_|_| |_| |_|\___| \_/\_/ \___/|_|  |_|\_\
-   
-     """);
+                       __     ___   ______                                           _    
+                       \ \   / (_) |  ____|                                         | |   
+                        \ \_/ / _  | |__ _ __ __ _ _ __ ___   _____      _____  _ __| | __
+                         \   / | | |  __| '__/ _` | '_ ` _ \ / _ \ \ /\ / / _ \| '__| |/ /
+                          | |  | | | |  | | | (_| | | | | | |  __/\ V  V / (_) | |  |   < 
+                          |_|  |_| |_|  |_|  \__,_|_| |_| |_|\___| \_/\_/ \___/|_|  |_|\_\
+
+                    """);
     Log.Information("Yi框架-Abp.vNext，启动！");
 
     var builder = WebApplication.CreateBuilder(args);

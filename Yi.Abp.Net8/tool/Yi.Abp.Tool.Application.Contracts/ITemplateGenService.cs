@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Volo.Abp.Application.Services;
+﻿using Volo.Abp.Application.Services;
 using Yi.Abp.Tool.Application.Contracts.Dtos;
 
-namespace Yi.Abp.Tool.Application.Contracts
+namespace Yi.Abp.Tool.Application.Contracts;
+
+public interface ITemplateGenService : IApplicationService
 {
-    public interface ITemplateGenService: IApplicationService
-    {
-        Task<byte[]> CreateModuleAsync(TemplateGenCreateInputDto moduleCreateInputDto);
-        Task<List<string>> GetAllTemplatesAsync();
-    }
+    Task<byte[]> CreateModuleAsync(TemplateGenCreateInputDto moduleCreateInputDto);
+    Task<List<string>> GetAllTemplatesAsync();
 }

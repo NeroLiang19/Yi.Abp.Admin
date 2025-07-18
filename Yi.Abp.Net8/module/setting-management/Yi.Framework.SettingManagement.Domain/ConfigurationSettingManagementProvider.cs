@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Volo.Abp;
+﻿using Microsoft.Extensions.Configuration;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Settings;
 
@@ -8,14 +6,13 @@ namespace Yi.Framework.SettingManagement.Domain;
 
 public class ConfigurationSettingManagementProvider : ISettingManagementProvider, ITransientDependency
 {
-    public string Name => ConfigurationSettingValueProvider.ProviderName;
-
-    protected IConfiguration Configuration { get; }
-
     public ConfigurationSettingManagementProvider(IConfiguration configuration)
     {
         Configuration = configuration;
     }
+
+    protected IConfiguration Configuration { get; }
+    public string Name => ConfigurationSettingValueProvider.ProviderName;
 
     public virtual Task<string> GetOrNullAsync(SettingDefinition setting, string providerKey)
     {
@@ -24,11 +21,11 @@ public class ConfigurationSettingManagementProvider : ISettingManagementProvider
 
     public virtual Task SetAsync(SettingDefinition setting, string value, string providerKey)
     {
-        throw new AbpException($"Can not set a setting value to the application configuration.");
+        throw new AbpException("Can not set a setting value to the application configuration.");
     }
 
     public virtual Task ClearAsync(SettingDefinition setting, string providerKey)
     {
-        throw new AbpException($"Can not set a setting value to the application configuration.");
+        throw new AbpException("Can not set a setting value to the application configuration.");
     }
 }

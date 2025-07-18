@@ -19,12 +19,12 @@ using Microsoft.AspNetCore.Mvc.Filters;
 namespace Yi.Framework.AspNetCore.UnifyResult;
 
 /// <summary>
-/// 规范化结果提供器
+///     规范化结果提供器
 /// </summary>
 public interface IUnifyResultProvider
 {
     /// <summary>
-    /// 异常返回值
+    ///     异常返回值
     /// </summary>
     /// <param name="context"></param>
     /// <param name="metadata"></param>
@@ -32,7 +32,7 @@ public interface IUnifyResultProvider
     IActionResult OnException(ExceptionContext context, ExceptionMetadata metadata);
 
     /// <summary>
-    /// 成功返回值
+    ///     成功返回值
     /// </summary>
     /// <param name="context"></param>
     /// <param name="data"></param>
@@ -40,7 +40,7 @@ public interface IUnifyResultProvider
     IActionResult OnSucceeded(ActionExecutedContext context, object data);
 
     /// <summary>
-    /// 验证失败返回值
+    ///     验证失败返回值
     /// </summary>
     /// <param name="context"></param>
     /// <param name="metadata"></param>
@@ -48,11 +48,12 @@ public interface IUnifyResultProvider
     IActionResult OnValidateFailed(ActionExecutingContext context, ValidationMetadata metadata);
 
     /// <summary>
-    /// 拦截返回状态码
+    ///     拦截返回状态码
     /// </summary>
     /// <param name="context"></param>
     /// <param name="statusCode"></param>
     /// <param name="unifyResultSettings"></param>
     /// <returns></returns>
-    Task OnResponseStatusCodes(HttpContext context, int statusCode, UnifyResultSettingsOptions unifyResultSettings = default);
+    Task OnResponseStatusCodes(HttpContext context, int statusCode,
+        UnifyResultSettingsOptions unifyResultSettings = default);
 }

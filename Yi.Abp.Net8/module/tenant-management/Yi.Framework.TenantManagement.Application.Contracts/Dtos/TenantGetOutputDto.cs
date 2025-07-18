@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SqlSugar;
 using Volo.Abp.Application.Dtos;
 
-namespace Yi.Framework.TenantManagement.Application.Contracts.Dtos
+namespace Yi.Framework.TenantManagement.Application.Contracts.Dtos;
+
+public class TenantGetOutputDto : EntityDto<Guid>
 {
-    public class TenantGetOutputDto:EntityDto<Guid>
-    {
-        public  string Name { get;  set; }
-        public int EntityVersion { get;  set; }
+    public string Name { get; set; }
+    public int EntityVersion { get; set; }
 
-        public string TenantConnectionString { get;  set; }
+    public string TenantConnectionString { get; set; }
 
-        public SqlSugar.DbType DbType { get;  set; }
+    public DbType DbType { get; set; }
 
-        public DateTime CreationTime { get; set; }
-    }
+    public DateTime CreationTime { get; set; }
 }

@@ -7,7 +7,7 @@
 namespace Yi.Framework.AspNetCore.Authentication.OAuth.QQ;
 
 /// <summary>
-/// Contains constants specific to the <see cref="QQAuthenticationHandler"/>.
+///     Contains constants specific to the <see cref="QQAuthenticationHandler" />.
 /// </summary>
 public static class QQAuthenticationConstants
 {

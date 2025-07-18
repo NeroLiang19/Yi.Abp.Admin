@@ -6,33 +6,32 @@
 
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Yi.Framework.AspNetCore.Authentication.OAuth.QQ;
 
 /// <summary>
-/// Extension methods to add QQ authentication capabilities to an HTTP application pipeline.
+///     Extension methods to add QQ authentication capabilities to an HTTP application pipeline.
 /// </summary>
 public static class QQAuthenticationExtensions
 {
     /// <summary>
-    /// Adds <see cref="QQAuthenticationHandler"/> to the specified
-    /// <see cref="AuthenticationBuilder"/>, which enables QQ authentication capabilities.
+    ///     Adds <see cref="QQAuthenticationHandler" /> to the specified
+    ///     <see cref="AuthenticationBuilder" />, which enables QQ authentication capabilities.
     /// </summary>
     /// <param name="builder">The authentication builder.</param>
-    /// <returns>The <see cref="AuthenticationBuilder"/>.</returns>
+    /// <returns>The <see cref="AuthenticationBuilder" />.</returns>
     public static AuthenticationBuilder AddQQ([NotNull] this AuthenticationBuilder builder)
     {
         return builder.AddQQ(QQAuthenticationDefaults.AuthenticationScheme, options => { });
     }
 
     /// <summary>
-    /// Adds <see cref="QQAuthenticationHandler"/> to the specified
-    /// <see cref="AuthenticationBuilder"/>, which enables QQ authentication capabilities.
+    ///     Adds <see cref="QQAuthenticationHandler" /> to the specified
+    ///     <see cref="AuthenticationBuilder" />, which enables QQ authentication capabilities.
     /// </summary>
     /// <param name="builder">The authentication builder.</param>
     /// <param name="configuration">The delegate used to configure the OpenID 2.0 options.</param>
-    /// <returns>The <see cref="AuthenticationBuilder"/>.</returns>
+    /// <returns>The <see cref="AuthenticationBuilder" />.</returns>
     public static AuthenticationBuilder AddQQ(
         [NotNull] this AuthenticationBuilder builder,
         [NotNull] Action<QQAuthenticationOptions> configuration)
@@ -41,13 +40,13 @@ public static class QQAuthenticationExtensions
     }
 
     /// <summary>
-    /// Adds <see cref="QQAuthenticationHandler"/> to the specified
-    /// <see cref="AuthenticationBuilder"/>, which enables QQ authentication capabilities.
+    ///     Adds <see cref="QQAuthenticationHandler" /> to the specified
+    ///     <see cref="AuthenticationBuilder" />, which enables QQ authentication capabilities.
     /// </summary>
     /// <param name="builder">The authentication builder.</param>
     /// <param name="scheme">The authentication scheme associated with this instance.</param>
     /// <param name="configuration">The delegate used to configure the QQ options.</param>
-    /// <returns>The <see cref="AuthenticationBuilder"/>.</returns>
+    /// <returns>The <see cref="AuthenticationBuilder" />.</returns>
     public static AuthenticationBuilder AddQQ(
         [NotNull] this AuthenticationBuilder builder,
         [NotNull] string scheme,
@@ -57,14 +56,14 @@ public static class QQAuthenticationExtensions
     }
 
     /// <summary>
-    /// Adds <see cref="QQAuthenticationHandler"/> to the specified
-    /// <see cref="AuthenticationBuilder"/>, which enables QQ authentication capabilities.
+    ///     Adds <see cref="QQAuthenticationHandler" /> to the specified
+    ///     <see cref="AuthenticationBuilder" />, which enables QQ authentication capabilities.
     /// </summary>
     /// <param name="builder">The authentication builder.</param>
     /// <param name="scheme">The authentication scheme associated with this instance.</param>
     /// <param name="caption">The optional display name associated with this instance.</param>
     /// <param name="configuration">The delegate used to configure the QQ options.</param>
-    /// <returns>The <see cref="AuthenticationBuilder"/>.</returns>
+    /// <returns>The <see cref="AuthenticationBuilder" />.</returns>
     public static AuthenticationBuilder AddQQ(
         [NotNull] this AuthenticationBuilder builder,
         [NotNull] string scheme,
@@ -72,6 +71,5 @@ public static class QQAuthenticationExtensions
         [NotNull] Action<QQAuthenticationOptions> configuration)
     {
         return builder.AddScheme<QQAuthenticationOptions, QQAuthenticationHandler>(scheme, caption, configuration);
-
     }
 }

@@ -10,14 +10,14 @@ using Volo.Abp.DynamicProxy;
 namespace Yi.Framework.BackgroundWorkers.Hangfire;
 
 /// <summary>
-/// Hangfire 后台任务模块
+///     Hangfire 后台任务模块
 /// </summary>
 [DependsOn(typeof(AbpBackgroundWorkersHangfireModule),
     typeof(AbpBackgroundJobsHangfireModule))]
 public sealed class YiFrameworkBackgroundWorkersHangfireModule : AbpModule
 {
     /// <summary>
-    /// 配置服务前的预处理
+    ///     配置服务前的预处理
     /// </summary>
     /// <param name="context">服务配置上下文</param>
     public override void PreConfigureServices(ServiceConfigurationContext context)
@@ -27,7 +27,7 @@ public sealed class YiFrameworkBackgroundWorkersHangfireModule : AbpModule
     }
 
     /// <summary>
-    /// 应用程序初始化
+    ///     应用程序初始化
     /// </summary>
     /// <param name="context">应用程序初始化上下文</param>
     public override async Task OnApplicationInitializationAsync(ApplicationInitializationContext context)
@@ -38,7 +38,7 @@ public sealed class YiFrameworkBackgroundWorkersHangfireModule : AbpModule
 
         // 获取配置
         var configuration = context.ServiceProvider.GetRequiredService<IConfiguration>();
-        
+
         // 检查是否启用 Redis
         var isRedisEnabled = configuration.GetValue<bool>("Redis:IsEnabled");
 
@@ -56,11 +56,11 @@ public sealed class YiFrameworkBackgroundWorkersHangfireModule : AbpModule
             {
                 // 内存模式：直接使用 Hangfire
                 var unProxyWorker = ProxyHelper.UnProxy(worker);
-                
+
                 // 添加或更新循环任务
                 RecurringJob.AddOrUpdate(
                     worker.RecurringJobId,
-                    (Expression<Func<Task>>)(() => 
+                    (Expression<Func<Task>>)(() =>
                         ((IHangfireBackgroundWorker)unProxyWorker).DoWorkAsync(default)),
                     worker.CronExpression,
                     new RecurringJobOptions
@@ -72,7 +72,7 @@ public sealed class YiFrameworkBackgroundWorkersHangfireModule : AbpModule
     }
 
     /// <summary>
-    /// 应用程序初始化前的预处理
+    ///     应用程序初始化前的预处理
     /// </summary>
     /// <param name="context">应用程序初始化上下文</param>
     public override void OnPreApplicationInitialization(ApplicationInitializationContext context)

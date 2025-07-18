@@ -1,5 +1,4 @@
-﻿using Volo.Abp;
-using Volo.Abp.MultiTenancy;
+﻿using Volo.Abp.MultiTenancy;
 
 namespace Yi.Framework.TenantManagement.Domain;
 
@@ -9,11 +8,8 @@ public class TenantCacheItem
 {
     private const string CacheKeyFormat = "i:{0},n:{1}";
 
-    public TenantConfiguration Value { get; set; }
-
     public TenantCacheItem()
     {
-
     }
 
     public TenantCacheItem(TenantConfiguration value)
@@ -21,12 +17,11 @@ public class TenantCacheItem
         Value = value;
     }
 
+    public TenantConfiguration Value { get; set; }
+
     public static string CalculateCacheKey(Guid? id, string name)
     {
-        if (id == null && name.IsNullOrWhiteSpace())
-        {
-            throw new AbpException("Both id and name can't be invalid.");
-        }
+        if (id == null && name.IsNullOrWhiteSpace()) throw new AbpException("Both id and name can't be invalid.");
 
         return string.Format(CacheKeyFormat,
             id?.ToString() ?? "null",

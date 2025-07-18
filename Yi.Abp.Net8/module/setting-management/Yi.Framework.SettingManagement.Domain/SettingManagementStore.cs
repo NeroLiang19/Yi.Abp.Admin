@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Volo.Abp;
-using Volo.Abp.Caching;
+﻿using Volo.Abp.Caching;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Guids;
 using Volo.Abp.Settings;
@@ -12,11 +8,6 @@ namespace Yi.Framework.SettingManagement.Domain;
 
 public class SettingManagementStore : ISettingManagementStore, ITransientDependency
 {
-    protected IDistributedCache<SettingCacheItem> Cache { get; }
-    protected ISettingDefinitionManager SettingDefinitionManager { get; }
-    protected ISettingRepository SettingRepository { get; }
-    protected IGuidGenerator GuidGenerator { get; }
-
     public SettingManagementStore(
         ISettingRepository settingRepository,
         IGuidGenerator guidGenerator,
@@ -28,6 +19,11 @@ public class SettingManagementStore : ISettingManagementStore, ITransientDepende
         Cache = cache;
         SettingDefinitionManager = settingDefinitionManager;
     }
+
+    protected IDistributedCache<SettingCacheItem> Cache { get; }
+    protected ISettingDefinitionManager SettingDefinitionManager { get; }
+    protected ISettingRepository SettingRepository { get; }
+    protected IGuidGenerator GuidGenerator { get; }
 
     [UnitOfWork]
     public virtual async Task<string> GetOrNullAsync(string name, string providerName, string providerKey)
@@ -50,7 +46,8 @@ public class SettingManagementStore : ISettingManagementStore, ITransientDepende
             await SettingRepository.UpdateAsync(setting);
         }
 
-        await Cache.SetAsync(CalculateCacheKey(name, providerName, providerKey), new SettingCacheItem(setting?.Value), considerUow: true);
+        await Cache.SetAsync(CalculateCacheKey(name, providerName, providerKey), new SettingCacheItem(setting?.Value),
+            considerUow: true);
     }
 
     public virtual async Task<List<SettingValue>> GetListAsync(string providerName, string providerKey)
@@ -70,55 +67,6 @@ public class SettingManagementStore : ISettingManagementStore, ITransientDepende
         }
     }
 
-    protected virtual async Task<SettingCacheItem> GetCacheItemAsync(string name, string providerName, string providerKey)
-    {
-        var cacheKey = CalculateCacheKey(name, providerName, providerKey);
-        var cacheItem = await Cache.GetAsync(cacheKey, considerUow: true);
-
-        if (cacheItem != null)
-        {
-            return cacheItem;
-        }
-
-        cacheItem = new SettingCacheItem(null);
-
-        await SetCacheItemsAsync(providerName, providerKey, name, cacheItem);
-
-        return cacheItem;
-    }
-
-    private async Task SetCacheItemsAsync(
-        string providerName,
-        string providerKey,
-        string currentName,
-        SettingCacheItem currentCacheItem)
-    {
-        var settingDefinitions =await SettingDefinitionManager.GetAllAsync();
-        var settingsDictionary = (await SettingRepository.GetListAsync(providerName, providerKey))
-            .ToDictionary(s => s.Name, s => s.Value);
-
-        var cacheItems = new List<KeyValuePair<string, SettingCacheItem>>();
-
-        foreach (var settingDefinition in settingDefinitions)
-        {
-            var settingValue = settingsDictionary.GetOrDefault(settingDefinition.Name);
-
-            cacheItems.Add(
-                new KeyValuePair<string, SettingCacheItem>(
-                    CalculateCacheKey(settingDefinition.Name, providerName, providerKey),
-                    new SettingCacheItem(settingValue)
-                )
-            );
-
-            if (settingDefinition.Name == currentName)
-            {
-                currentCacheItem.Value = settingValue;
-            }
-        }
-
-        await Cache.SetManyAsync(cacheItems, considerUow: true);
-    }
-
     [UnitOfWork]
     public async Task<List<SettingValue>> GetListAsync(string[] names, string providerName, string providerKey)
     {
@@ -135,23 +83,63 @@ public class SettingManagementStore : ISettingManagementStore, ITransientDepende
 
         var cacheItems = await GetCacheItemsAsync(names, providerName, providerKey);
         foreach (var item in cacheItems)
-        {
             result.Add(new SettingValue(GetSettingNameFormCacheKeyOrNull(item.Key), item.Value?.Value));
-        }
 
         return result;
     }
 
-    protected virtual async Task<List<KeyValuePair<string, SettingCacheItem>>> GetCacheItemsAsync(string[] names, string providerName, string providerKey)
+    protected virtual async Task<SettingCacheItem> GetCacheItemAsync(string name, string providerName,
+        string providerKey)
+    {
+        var cacheKey = CalculateCacheKey(name, providerName, providerKey);
+        var cacheItem = await Cache.GetAsync(cacheKey, considerUow: true);
+
+        if (cacheItem != null) return cacheItem;
+
+        cacheItem = new SettingCacheItem(null);
+
+        await SetCacheItemsAsync(providerName, providerKey, name, cacheItem);
+
+        return cacheItem;
+    }
+
+    private async Task SetCacheItemsAsync(
+        string providerName,
+        string providerKey,
+        string currentName,
+        SettingCacheItem currentCacheItem)
+    {
+        var settingDefinitions = await SettingDefinitionManager.GetAllAsync();
+        var settingsDictionary = (await SettingRepository.GetListAsync(providerName, providerKey))
+            .ToDictionary(s => s.Name, s => s.Value);
+
+        var cacheItems = new List<KeyValuePair<string, SettingCacheItem>>();
+
+        foreach (var settingDefinition in settingDefinitions)
+        {
+            var settingValue = settingsDictionary.GetOrDefault(settingDefinition.Name);
+
+            cacheItems.Add(
+                new KeyValuePair<string, SettingCacheItem>(
+                    CalculateCacheKey(settingDefinition.Name, providerName, providerKey),
+                    new SettingCacheItem(settingValue)
+                )
+            );
+
+            if (settingDefinition.Name == currentName) currentCacheItem.Value = settingValue;
+        }
+
+        await Cache.SetManyAsync(cacheItems, considerUow: true);
+    }
+
+    protected virtual async Task<List<KeyValuePair<string, SettingCacheItem>>> GetCacheItemsAsync(string[] names,
+        string providerName, string providerKey)
     {
         var cacheKeys = names.Select(x => CalculateCacheKey(x, providerName, providerKey)).ToList();
 
         var cacheItems = (await Cache.GetManyAsync(cacheKeys, considerUow: true)).ToList();
 
-        if (cacheItems.All(x => x.Value != null))
-        {
-            return cacheItems;
-        }
+        if (cacheItems.All(x => x.Value != null)) return cacheItems;
 
         var notCacheKeys = cacheItems.Where(x => x.Value == null).Select(x => x.Key).ToList();
 
@@ -161,10 +149,7 @@ public class SettingManagementStore : ISettingManagementStore, ITransientDepende
         foreach (var key in cacheKeys)
         {
             var item = newCacheItems.FirstOrDefault(x => x.Key == key);
-            if (item.Value == null)
-            {
-                item = cacheItems.FirstOrDefault(x => x.Key == key);
-            }
+            if (item.Value == null) item = cacheItems.FirstOrDefault(x => x.Key == key);
 
             result.Add(new KeyValuePair<string, SettingCacheItem>(key, item.Value));
         }
@@ -177,9 +162,12 @@ public class SettingManagementStore : ISettingManagementStore, ITransientDepende
         string providerKey,
         List<string> notCacheKeys)
     {
-        var settingDefinitions =(await SettingDefinitionManager.GetAllAsync()).Where(x => notCacheKeys.Any(k => GetSettingNameFormCacheKeyOrNull(k) == x.Name));
+        var settingDefinitions = (await SettingDefinitionManager.GetAllAsync()).Where(x =>
+            notCacheKeys.Any(k => GetSettingNameFormCacheKeyOrNull(k) == x.Name));
 
-        var settingsDictionary = (await SettingRepository.GetListAsync(notCacheKeys.Select(GetSettingNameFormCacheKeyOrNull).ToArray(), providerName, providerKey))
+        var settingsDictionary =
+            (await SettingRepository.GetListAsync(notCacheKeys.Select(GetSettingNameFormCacheKeyOrNull).ToArray(),
+                providerName, providerKey))
             .ToDictionary(s => s.Name, s => s.Value);
 
         var cacheItems = new List<KeyValuePair<string, SettingCacheItem>>();

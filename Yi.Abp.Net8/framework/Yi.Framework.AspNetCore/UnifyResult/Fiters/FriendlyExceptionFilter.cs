@@ -18,24 +18,22 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Volo.Abp.AspNetCore.Mvc;
-using Volo.Abp.DependencyInjection;
 using Yi.Framework.Core.Extensions;
 
 namespace Yi.Framework.AspNetCore.UnifyResult.Fiters;
 
 /// <summary>
-/// 友好异常拦截器
+///     友好异常拦截器
 /// </summary>
 public sealed class FriendlyExceptionFilter : IAsyncExceptionFilter
 {
     /// <summary>
-    /// 异常拦截
+    ///     异常拦截
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
     public async Task OnExceptionAsync(ExceptionContext context)
     {
-
         // 排除 WebSocket 请求处理
         if (context.HttpContext.IsWebSocketRequest()) return;
 
@@ -44,11 +42,11 @@ public sealed class FriendlyExceptionFilter : IAsyncExceptionFilter
 
         // 解析异常信息
         var exceptionMetadata = GetExceptionMetadata(context);
-        
-        IUnifyResultProvider unifyResult = context.GetRequiredService<IUnifyResultProvider>();
+
+        var unifyResult = context.GetRequiredService<IUnifyResultProvider>();
         // 执行规范化异常处理
         context.Result = unifyResult.OnException(context, exceptionMetadata);
-        
+
         // 创建日志记录器
         var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<FriendlyExceptionFilter>>();
 
@@ -57,7 +55,7 @@ public sealed class FriendlyExceptionFilter : IAsyncExceptionFilter
     }
 
     /// <summary>
-    /// 获取异常元数据
+    ///     获取异常元数据
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
@@ -74,21 +72,19 @@ public sealed class FriendlyExceptionFilter : IAsyncExceptionFilter
         // 判断是否是 ExceptionContext 或者 ActionExecutedContext
         var exception = context is ExceptionContext exContext
             ? exContext.Exception
-            : (
-                context is ActionExecutedContext edContext
-                    ? edContext.Exception
-                    : default
-            );
+            : context is ActionExecutedContext edContext
+                ? edContext.Exception
+                : default;
 
         // 判断是否是友好异常
         if (exception is UserFriendlyException friendlyException)
         {
-            int statusCode2 = 500;
+            var statusCode2 = 500;
             int.TryParse(friendlyException.Code, out statusCode2);
             isFriendlyException = true;
             errorCode = friendlyException.Code;
             originErrorCode = friendlyException.Code;
-            statusCode = statusCode2==0?403:statusCode2;
+            statusCode = statusCode2 == 0 ? 403 : statusCode2;
             isValidationException = false;
             errors = friendlyException.Message;
             data = friendlyException.Data;

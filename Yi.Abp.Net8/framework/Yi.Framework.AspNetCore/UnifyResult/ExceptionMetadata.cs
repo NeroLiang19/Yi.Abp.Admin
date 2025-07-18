@@ -15,32 +15,32 @@
 namespace Yi.Framework.AspNetCore.UnifyResult;
 
 /// <summary>
-/// 异常元数据
+///     异常元数据
 /// </summary>
 public sealed class ExceptionMetadata
 {
     /// <summary>
-    /// 状态码
+    ///     状态码
     /// </summary>
     public int StatusCode { get; internal set; }
 
     /// <summary>
-    /// 错误码
+    ///     错误码
     /// </summary>
     public object ErrorCode { get; internal set; }
 
     /// <summary>
-    /// 错误码（没被复写过的 ErrorCode ）
+    ///     错误码（没被复写过的 ErrorCode ）
     /// </summary>
     public object OriginErrorCode { get; internal set; }
 
     /// <summary>
-    /// 错误对象（信息）
+    ///     错误对象（信息）
     /// </summary>
     public object Errors { get; internal set; }
 
     /// <summary>
-    /// 额外数据
+    ///     额外数据
     /// </summary>
     public object Data { get; internal set; }
 }

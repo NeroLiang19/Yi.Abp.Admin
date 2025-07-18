@@ -1,6 +1,6 @@
+using FileDock.Web;
 using Serilog;
 using Serilog.Events;
-using Yi.Abp.Web;
 
 //创建日志,可使用{SourceContext}记录
 Log.Logger = new LoggerConfiguration()
@@ -36,7 +36,7 @@ try
     builder.WebHost.UseUrls(builder.Configuration["App:SelfUrl"]);
     builder.Host.UseAutofac();
     builder.Host.UseSerilog();
-    await builder.Services.AddApplicationAsync<YiAbpWebModule>();
+    await builder.Services.AddApplicationAsync<FileDockWebModule>();
     var app = builder.Build();
     await app.InitializeApplicationAsync();
     await app.RunAsync();

@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Yi.Abp.Web": {
+    "FileDock.Web": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

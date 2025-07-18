@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Yi.Abp.Application.Contracts\Yi.Abp.Application.Contracts.csproj" />
+    <ProjectReference Include="..\..\module\filedock\FileDock.Application.Contracts\FileDock.Application.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

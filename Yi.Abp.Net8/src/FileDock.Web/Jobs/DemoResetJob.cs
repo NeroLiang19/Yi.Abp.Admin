@@ -3,7 +3,7 @@ using Volo.Abp.Data;
 using Yi.Framework.Rbac.Domain.Entities;
 using Yi.Framework.SqlSugarCore.Abstractions;
 
-namespace Yi.Abp.Web.Jobs
+namespace FileDock.Web.Jobs
 {
     public class DemoResetJob  : HangfireBackgroundWorkerBase
     {

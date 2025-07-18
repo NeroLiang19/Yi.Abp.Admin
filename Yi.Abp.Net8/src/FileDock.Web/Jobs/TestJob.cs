@@ -3,7 +3,7 @@ using Volo.Abp.BackgroundWorkers.Hangfire;
 using Yi.Framework.Rbac.Domain.Entities;
 using Yi.Framework.SqlSugarCore.Abstractions;
 
-namespace Yi.Abp.Web.Jobs
+namespace FileDock.Web.Jobs
 {
     /// <summary>
     /// 定时任务Test,Job可单独拆成一个Host单独允许

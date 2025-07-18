@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Consts\" />
+      <Folder Include="Dtos\" />
+      <Folder Include="Enums\" />
+      <Folder Include="Etos\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\audit-logging\Yi.Framework.AuditLogging.Domain.Shared\Yi.Framework.AuditLogging.Domain.Shared.csproj" />
+      <ProjectReference Include="..\..\rbac\Yi.Framework.Rbac.Domain.Shared\Yi.Framework.Rbac.Domain.Shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Volo.Abp.SettingManagement.Domain.Shared" Version="8.3.4" />
+    </ItemGroup>
+
+</Project>

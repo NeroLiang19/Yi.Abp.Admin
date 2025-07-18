@@ -2,6 +2,8 @@
 	<PropertyGroup>
 	  <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 	  <DockerfileContext>..\..</DockerfileContext>
+	  <AssemblyName>FileDock.Web</AssemblyName>
+	  <RootNamespace>FileDock.Web</RootNamespace>
 	</PropertyGroup>
 	<Import Project="..\..\common.props" />
 
@@ -30,8 +32,10 @@
     <ProjectReference Include="..\..\framework\Yi.Framework.AspNetCore.Authentication.OAuth\Yi.Framework.AspNetCore.Authentication.OAuth.csproj" />
     <ProjectReference Include="..\..\framework\Yi.Framework.AspNetCore\Yi.Framework.AspNetCore.csproj" />
     <ProjectReference Include="..\..\framework\Yi.Framework.BackgroundWorkers.Hangfire\Yi.Framework.BackgroundWorkers.Hangfire.csproj" />
-    <ProjectReference Include="..\Yi.Abp.Application\Yi.Abp.Application.csproj" />
-    <ProjectReference Include="..\Yi.Abp.SqlSugarCore\Yi.Abp.SqlSugarCore.csproj" />
+    <ProjectReference Include="..\..\module\filedock\FileDock.Application\FileDock.Application.csproj" />
+    <ProjectReference Include="..\..\module\filedock\FileDock.SqlSugarCore\FileDock.SqlSugarCore.csproj" />
+    <ProjectReference Include="..\..\module\rbac\Yi.Framework.Rbac.Application\Yi.Framework.Rbac.Application.csproj" />
+    <ProjectReference Include="..\..\module\tenant-management\Yi.Framework.TenantManagement.Application\Yi.Framework.TenantManagement.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -62,6 +66,10 @@
     <None Update="ip2region.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="logs\all\" />
   </ItemGroup>
 
 </Project>

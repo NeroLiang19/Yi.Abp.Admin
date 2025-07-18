@@ -3,7 +3,7 @@ using Volo.Abp.BackgroundWorkers.Hangfire;
 using Yi.Framework.Rbac.Domain.Shared.Options;
 using Yi.Framework.SqlSugarCore.Abstractions;
 
-namespace Yi.Abp.Web.Jobs.rbac
+namespace FileDock.Web.Jobs.rbac
 {
     public class BackupDataBaseJob: HangfireBackgroundWorkerBase
     {

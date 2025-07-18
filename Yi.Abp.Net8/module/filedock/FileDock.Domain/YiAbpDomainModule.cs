@@ -1,16 +1,17 @@
-﻿using Volo.Abp.Caching;
+﻿using FileDock.Domain.Shared;
+using Volo.Abp.Caching;
 using Volo.Abp.Domain;
-using Yi.Abp.Domain.Shared;
+using Volo.Abp.Modularity;
 using Yi.Framework.AuditLogging.Domain;
 using Yi.Framework.Mapster;
 using Yi.Framework.Rbac.Domain;
 using Yi.Framework.SettingManagement.Domain;
 using Yi.Framework.TenantManagement.Domain;
 
-namespace Yi.Abp.Domain
+namespace FileDock.Domain
 {
     [DependsOn(
-        typeof(YiAbpDomainSharedModule),
+        typeof(FileDockDomainSharedModule),
         typeof(YiFrameworkTenantManagementDomainModule),
         typeof(YiFrameworkRbacDomainModule),
         typeof(YiFrameworkAuditLoggingDomainModule),
@@ -19,7 +20,7 @@ namespace Yi.Abp.Domain
         typeof(AbpDddDomainModule),
         typeof(AbpCachingModule)
         )]
-    public class YiAbpDomainModule : AbpModule
+    public class FileDockDomainModule : AbpModule
     {
 
     }

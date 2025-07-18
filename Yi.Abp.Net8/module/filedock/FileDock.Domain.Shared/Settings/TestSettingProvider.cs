@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Volo.Abp.Settings;
+﻿using Volo.Abp.Settings;
 
-namespace Yi.Abp.Domain.Shared.Settings
+namespace FileDock.Domain.Shared.Settings
 {
     internal class TestSettingProvider : SettingDefinitionProvider
     {

@@ -3,6 +3,8 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading.RateLimiting;
+using FileDock.Application;
+using FileDock.SqlSugarCore;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using Hangfire.Redis.StackExchange;
@@ -26,8 +28,6 @@ using Volo.Abp.BackgroundWorkers;
 using Volo.Abp.Caching;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.Swashbuckle;
-using Yi.Abp.Application;
-using Yi.Abp.SqlsugarCore;
 using Yi.Framework.AspNetCore;
 using Yi.Framework.AspNetCore.Authentication.OAuth;
 using Yi.Framework.AspNetCore.Authentication.OAuth.Gitee;
@@ -42,11 +42,11 @@ using Yi.Framework.Rbac.Domain.Shared.Consts;
 using Yi.Framework.Rbac.Domain.Shared.Options;
 using Yi.Framework.TenantManagement.Application;
 
-namespace Yi.Abp.Web
+namespace FileDock.Web
 {
     [DependsOn(
-        typeof(YiAbpSqlSugarCoreModule),
-        typeof(YiAbpApplicationModule),
+        typeof(FileDockSqlSugarCoreModule),
+        typeof(FileDockApplicationModule),
         typeof(AbpAspNetCoreMultiTenancyModule),
         typeof(AbpAspNetCoreMvcModule),
 
@@ -60,7 +60,7 @@ namespace Yi.Abp.Web
         typeof(YiFrameworkBackgroundWorkersHangfireModule),
         typeof(AbpAutofacModule)
     )]
-    public class YiAbpWebModule : AbpModule
+    public class FileDockWebModule : AbpModule
     {
         private const string DefaultCorsPolicyName = "Default";
 
@@ -69,7 +69,7 @@ namespace Yi.Abp.Web
             //动态Api-改进在pre中配置，启动更快
             PreConfigure<AbpAspNetCoreMvcOptions>(options =>
             {
-                options.ConventionalControllers.Create(typeof(YiAbpApplicationModule).Assembly,
+                options.ConventionalControllers.Create(typeof(FileDockApplicationModule).Assembly,
                     options => options.RemoteServiceName = "default");
                 options.ConventionalControllers.Create(typeof(YiFrameworkRbacApplicationModule).Assembly,
                     options => options.RemoteServiceName = "rbac");
@@ -142,7 +142,7 @@ namespace Yi.Abp.Web
             Configure<AbpAntiForgeryOptions>(options => { options.AutoValidate = false; });
 
             //Swagger
-            context.Services.AddYiSwaggerGen<YiAbpWebModule>(options =>
+            context.Services.AddYiSwaggerGen<FileDockWebModule>(options =>
             {
                 options.SwaggerDoc("default",
                     new OpenApiInfo { Title = "Yi.Framework.Abp", Version = "v1", Description = "集大成者" });
@@ -350,9 +350,6 @@ namespace Yi.Abp.Web
             //swagger
             app.UseYiSwagger();
 
-            //流量访问统计,需redis支持，否则不生效
-            //app.UseAccessLog();
-
             //请求处理
             app.UseApiInfoHandling();
 
@@ -390,7 +387,7 @@ namespace Yi.Abp.Web
             app.UseAbpHangfireDashboard("/hangfire",
                 options =>
                 {
-                    options.AsyncAuthorization = [new YiTokenAuthorizationFilter(app.ApplicationServices)];
+                    options.AsyncAuthorization = new[] { new YiTokenAuthorizationFilter(app.ApplicationServices) };
                 });
 
             //终节点

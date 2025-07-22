@@ -7,7 +7,7 @@ using Yi.Framework.TenantManagement.Application.Contracts;
 namespace Demo.Application.Contracts;
 
 [DependsOn(
-    typeof(FileDockDomainSharedModule),
+    typeof(DemoDomainSharedModule),
     typeof(YiFrameworkRbacApplicationContractsModule),
     typeof(AbpSettingManagementApplicationContractsModule),
     typeof(YiFrameworkTenantManagementApplicationContractsModule),

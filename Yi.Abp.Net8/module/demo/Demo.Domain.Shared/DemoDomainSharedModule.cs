@@ -10,6 +10,6 @@ namespace Demo.Domain.Shared;
     typeof(YiFrameworkAuditLoggingDomainSharedModule),
     typeof(AbpSettingManagementDomainSharedModule),
     typeof(AbpDddDomainSharedModule))]
-public class FileDockDomainSharedModule : AbpModule
+public class DemoDomainSharedModule : AbpModule
 {
 }

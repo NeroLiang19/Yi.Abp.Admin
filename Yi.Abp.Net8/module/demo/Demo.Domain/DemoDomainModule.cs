@@ -11,7 +11,7 @@ using Yi.Framework.TenantManagement.Domain;
 namespace Demo.Domain;
 
 [DependsOn(
-    typeof(FileDockDomainSharedModule),
+    typeof(DemoDomainSharedModule),
     typeof(YiFrameworkTenantManagementDomainModule),
     typeof(YiFrameworkRbacDomainModule),
     typeof(YiFrameworkAuditLoggingDomainModule),

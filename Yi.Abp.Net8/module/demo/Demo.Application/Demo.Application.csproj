@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="..\..\..\common.props"/>
+    <Import Project="..\..\..\common.props" />
 
     <ItemGroup>
         <ProjectReference Include="..\..\rbac\Yi.Framework.Rbac.Application\Yi.Framework.Rbac.Application.csproj" />
@@ -7,10 +7,6 @@
         <ProjectReference Include="..\..\tenant-management\Yi.Framework.TenantManagement.Application\Yi.Framework.TenantManagement.Application.csproj" />
         <ProjectReference Include="..\Demo.Domain\Demo.Domain.csproj" />
         <ProjectReference Include="..\Demok.Application.Contracts\Demo.Application.Contracts.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Services\" />
     </ItemGroup>
 
 </Project>

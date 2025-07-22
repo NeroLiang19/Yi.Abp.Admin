@@ -5,36 +5,36 @@
         <AssemblyName>Demo.Web</AssemblyName>
         <RootNamespace>Demo.Web</RootNamespace>
     </PropertyGroup>
-    <Import Project="..\..\common.props"/>
+    <Import Project="..\..\common.props" />
 
 
     <ItemGroup>
-        <PackageReference Include="Hangfire.MemoryStorage" Version="1.8.1.1"/>
-        <PackageReference Include="Hangfire.Redis.StackExchange" Version="1.9.4"/>
+        <PackageReference Include="Hangfire.MemoryStorage" Version="1.8.1.1" />
+        <PackageReference Include="Hangfire.Redis.StackExchange" Version="1.9.4" />
         <!-- 解决 docker 构建冲突问题，冲突版本信息如下 -->
-        <!-- Yi.Abp.Web -> Hangfire.Redis.StackExchange 1.9.4 -> Hangfire.Core (>= 1.8.7)  -->
-        <!-- Yi.Abp.Web -> Yi.Abp.Application -> Yi.Framework.Rbac.Application -> Volo.Abp.BackgroundJobs.HangFire 0.4.1 -> Volo.Abp.HangFire 0.4.1 -> Hangfire.AspNetCore 1.6.19 -> Hangfire.Core (= 1.6.19). -->
-        <PackageReference Include="Hangfire.Core" Version="1.8.14"/>
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.3"/>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.3"/>
-        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6"/>
-        <PackageReference Include="Serilog.AspNetCore" Version="8.0.1"/>
-        <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0"/>
-        <PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" Version="$(AbpVersion)"/>
-        <PackageReference Include="Volo.Abp.AspNetCore.MultiTenancy" Version="$(AbpVersion)"/>
-        <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="$(AbpVersion)"/>
-        <PackageReference Include="Volo.Abp.AspNetCore.Serilog" Version="$(AbpVersion)"/>
-        <PackageReference Include="Volo.Abp.Autofac" Version="$(AbpVersion)"/>
+        <!-- Demo.Web -> Hangfire.Redis.StackExchange 1.9.4 -> Hangfire.Core (>= 1.8.7)  -->
+        <!-- Demo.Web -> Demo.Application -> Yi.Framework.Rbac.Application -> Volo.Abp.BackgroundJobs.HangFire 0.4.1 -> Volo.Abp.HangFire 0.4.1 -> Hangfire.AspNetCore 1.6.19 -> Hangfire.Core (= 1.6.19). -->
+        <PackageReference Include="Hangfire.Core" Version="1.8.14" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.3" />
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
+        <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
+        <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
+        <PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" Version="$(AbpVersion)" />
+        <PackageReference Include="Volo.Abp.AspNetCore.MultiTenancy" Version="$(AbpVersion)" />
+        <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="$(AbpVersion)" />
+        <PackageReference Include="Volo.Abp.AspNetCore.Serilog" Version="$(AbpVersion)" />
+        <PackageReference Include="Volo.Abp.Autofac" Version="$(AbpVersion)" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\framework\Yi.Framework.AspNetCore.Authentication.OAuth\Yi.Framework.AspNetCore.Authentication.OAuth.csproj"/>
-        <ProjectReference Include="..\..\framework\Yi.Framework.AspNetCore\Yi.Framework.AspNetCore.csproj"/>
-        <ProjectReference Include="..\..\framework\Yi.Framework.BackgroundWorkers.Hangfire\Yi.Framework.BackgroundWorkers.Hangfire.csproj"/>
-        <ProjectReference Include="..\..\module\filedock\FileDock.Application\FileDock.Application.csproj"/>
-        <ProjectReference Include="..\..\module\filedock\FileDock.SqlSugarCore\FileDock.SqlSugarCore.csproj"/>
-        <ProjectReference Include="..\..\module\rbac\Yi.Framework.Rbac.Application\Yi.Framework.Rbac.Application.csproj"/>
-        <ProjectReference Include="..\..\module\tenant-management\Yi.Framework.TenantManagement.Application\Yi.Framework.TenantManagement.Application.csproj"/>
+        <ProjectReference Include="..\..\framework\Yi.Framework.AspNetCore.Authentication.OAuth\Yi.Framework.AspNetCore.Authentication.OAuth.csproj" />
+        <ProjectReference Include="..\..\framework\Yi.Framework.AspNetCore\Yi.Framework.AspNetCore.csproj" />
+        <ProjectReference Include="..\..\framework\Yi.Framework.BackgroundWorkers.Hangfire\Yi.Framework.BackgroundWorkers.Hangfire.csproj" />
+        <ProjectReference Include="..\..\module\demo\Demo.Application\Demo.Application.csproj" />
+        <ProjectReference Include="..\..\module\demo\Demo.SqlSugarCore\Demo.SqlSugarCore.csproj" />
+        <ProjectReference Include="..\..\module\rbac\Yi.Framework.Rbac.Application\Yi.Framework.Rbac.Application.csproj" />
+        <ProjectReference Include="..\..\module\tenant-management\Yi.Framework.TenantManagement.Application\Yi.Framework.TenantManagement.Application.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -56,7 +56,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="logs\all\"/>
+        <Folder Include="Controller\" />
+        <Folder Include="logs\all\" />
     </ItemGroup>
 
     <ItemGroup>

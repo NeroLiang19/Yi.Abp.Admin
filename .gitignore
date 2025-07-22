@@ -277,3 +277,4 @@ database_backup
 /Yi.Abp.Net8/src/Yi.Abp.Web/yi-abp-dev.db
 
 package-lock.json
+/Yi.Abp.Net8/src/Demo.Web/logs/all

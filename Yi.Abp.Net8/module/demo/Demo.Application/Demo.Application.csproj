@@ -6,7 +6,7 @@
         <ProjectReference Include="..\..\setting-management\Yi.Framework.SettingManagement.Application\Yi.Framework.SettingManagement.Application.csproj" />
         <ProjectReference Include="..\..\tenant-management\Yi.Framework.TenantManagement.Application\Yi.Framework.TenantManagement.Application.csproj" />
         <ProjectReference Include="..\Demo.Domain\Demo.Domain.csproj" />
-        <ProjectReference Include="..\Demok.Application.Contracts\Demo.Application.Contracts.csproj" />
+        <ProjectReference Include="..\Demo.Application.Contracts\Demo.Application.Contracts.csproj" />
     </ItemGroup>
 
 </Project>

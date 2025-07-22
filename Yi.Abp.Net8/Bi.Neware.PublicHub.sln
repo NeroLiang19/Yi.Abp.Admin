@@ -138,7 +138,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Domain", "module\demo\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Domain.Shared", "module\demo\Demo.Domain.Shared\Demo.Domain.Shared.csproj", "{D58EFF91-4BBD-40F2-BA53-1055641E8A02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Application.Contracts", "module\demo\Demok.Application.Contracts\Demo.Application.Contracts.csproj", "{DEB35856-3CB6-4679-9ADC-F6BF56FCEE3E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Application.Contracts", "module\demo\Demo.Application.Contracts\Demo.Application.Contracts.csproj", "{DEB35856-3CB6-4679-9ADC-F6BF56FCEE3E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.SqlSugarCore", "module\demo\Demo.SqlSugarCore\Demo.SqlSugarCore.csproj", "{1498E9C7-277D-477F-B114-3716FABDAED8}"
 EndProject

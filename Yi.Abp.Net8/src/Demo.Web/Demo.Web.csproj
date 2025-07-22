@@ -2,8 +2,8 @@
     <PropertyGroup>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <DockerfileContext>..\..</DockerfileContext>
-        <AssemblyName>FileDock.Web</AssemblyName>
-        <RootNamespace>FileDock.Web</RootNamespace>
+        <AssemblyName>Demo.Web</AssemblyName>
+        <RootNamespace>Demo.Web</RootNamespace>
     </PropertyGroup>
     <Import Project="..\..\common.props"/>
 
@@ -57,6 +57,23 @@
 
     <ItemGroup>
         <Folder Include="logs\all\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\icon\0.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\icon\1.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\icon\10.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\icon\11.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\icon\12.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\icon\13.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\icon\14.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\icon\2.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\icon\3.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\icon\4.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\icon\5.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\icon\6.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\icon\8.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\icon\9.png" />
     </ItemGroup>
 
 </Project>

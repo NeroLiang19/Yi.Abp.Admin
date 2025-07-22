@@ -11,7 +11,7 @@
         <ProjectReference Include="..\..\rbac\Yi.Framework.Rbac.SqlSugarCore\Yi.Framework.Rbac.SqlSugarCore.csproj"/>
         <ProjectReference Include="..\..\setting-management\Yi.Framework.SettingManagement.SqlSugarCore\Yi.Framework.SettingManagement.SqlSugarCore.csproj"/>
         <ProjectReference Include="..\..\tenant-management\Yi.Framework.TenantManagement.SqlSugarCore\Yi.Framework.TenantManagement.SqlSugarCore.csproj"/>
-        <ProjectReference Include="..\FileDock.Domain\FileDock.Domain.csproj"/>
+        <ProjectReference Include="..\Demo.Domain\Demo.Domain.csproj" />
     </ItemGroup>
 
 </Project>

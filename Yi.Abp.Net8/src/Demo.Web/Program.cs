@@ -1,4 +1,4 @@
-using FileDock.Web;
+using Demo.Web;
 using Serilog;
 using Serilog.Events;
 
@@ -40,7 +40,7 @@ try
     builder.WebHost.UseUrls(builder.Configuration["App:SelfUrl"]);
     builder.Host.UseAutofac();
     builder.Host.UseSerilog();
-    await builder.Services.AddApplicationAsync<FileDockWebModule>();
+    await builder.Services.AddApplicationAsync<DemoWebModule>();
     var app = builder.Build();
     await app.InitializeApplicationAsync();
     await app.RunAsync();

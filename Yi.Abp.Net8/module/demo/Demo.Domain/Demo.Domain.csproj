@@ -13,7 +13,7 @@
         <ProjectReference Include="..\..\rbac\Yi.Framework.Rbac.Domain\Yi.Framework.Rbac.Domain.csproj"/>
         <ProjectReference Include="..\..\setting-management\Yi.Framework.SettingManagement.Domain\Yi.Framework.SettingManagement.Domain.csproj"/>
         <ProjectReference Include="..\..\tenant-management\Yi.Framework.TenantManagement.Domain\Yi.Framework.TenantManagement.Domain.csproj"/>
-        <ProjectReference Include="..\FileDock.Domain.Shared\FileDock.Domain.Shared.csproj"/>
+        <ProjectReference Include="..\Demo.Domain.Shared\Demo.Domain.Shared.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

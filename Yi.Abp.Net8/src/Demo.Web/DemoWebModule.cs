@@ -3,8 +3,8 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading.RateLimiting;
-using FileDock.Application;
-using FileDock.SqlSugarCore;
+using Demo.Application;
+using Demo.SqlSugarCore;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using Hangfire.Redis.StackExchange;
@@ -45,8 +45,8 @@ using Yi.Framework.TenantManagement.Application;
 namespace Demo.Web;
 
 [DependsOn(
-    typeof(FileDockSqlSugarCoreModule),
-    typeof(FileDockApplicationModule),
+    typeof(DemoSqlSugarCoreModule),
+    typeof(DemoApplicationModule),
     typeof(AbpAspNetCoreMultiTenancyModule),
     typeof(AbpAspNetCoreMvcModule),
     typeof(AbpSwashbuckleModule),
@@ -67,7 +67,7 @@ public class DemoWebModule : AbpModule
         //动态Api-改进在pre中配置，启动更快
         PreConfigure<AbpAspNetCoreMvcOptions>(options =>
         {
-            options.ConventionalControllers.Create(typeof(FileDockApplicationModule).Assembly,
+            options.ConventionalControllers.Create(typeof(DemoApplicationModule).Assembly,
                 options => options.RemoteServiceName = "default");
             options.ConventionalControllers.Create(typeof(YiFrameworkRbacApplicationModule).Assembly,
                 options => options.RemoteServiceName = "rbac");

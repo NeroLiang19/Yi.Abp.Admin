@@ -31,8 +31,8 @@
         <ProjectReference Include="..\..\framework\Yi.Framework.AspNetCore.Authentication.OAuth\Yi.Framework.AspNetCore.Authentication.OAuth.csproj"/>
         <ProjectReference Include="..\..\framework\Yi.Framework.AspNetCore\Yi.Framework.AspNetCore.csproj"/>
         <ProjectReference Include="..\..\framework\Yi.Framework.BackgroundWorkers.Hangfire\Yi.Framework.BackgroundWorkers.Hangfire.csproj"/>
-        <ProjectReference Include="..\..\module\filedock\FileDock.Application\FileDock.Application.csproj"/>
-        <ProjectReference Include="..\..\module\filedock\FileDock.SqlSugarCore\FileDock.SqlSugarCore.csproj"/>
+        <ProjectReference Include="..\..\module\demo\Demo.Application\Demo.Application.csproj" />
+        <ProjectReference Include="..\..\module\demo\Demo.SqlSugarCore\Demo.SqlSugarCore.csproj" />
         <ProjectReference Include="..\..\module\rbac\Yi.Framework.Rbac.Application\Yi.Framework.Rbac.Application.csproj"/>
         <ProjectReference Include="..\..\module\tenant-management\Yi.Framework.TenantManagement.Application\Yi.Framework.TenantManagement.Application.csproj"/>
     </ItemGroup>

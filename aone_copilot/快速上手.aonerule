@@ -1,0 +1,156 @@
+# Yi.Abp.Net8 框架快速上手指南
+
+## 🏗️ 框架概述
+
+Yi.Abp.Net8 是基于 ABP 框架的企业级应用开发脚手架，遵循领域驱动设计(DDD)原则和模式，实现了清晰的分层应用程序架构。本指南将帮助您快速理解框架结构并开始业务开发。
+
+## 📂 项目结构
+
+### 核心目录
+- **framework/**: 框架核心组件，提供基础设施支持
+- **module/**: 业务模块实现，每个模块都是独立的功能单元
+- **src/**: Web项目入口，用于启动和集成各业务模块
+- **client/**: 客户端项目，用于调用远程服务
+- **test/**: 单元测试和集成测试项目
+- **tool/**: 开发辅助工具
+
+### 🧠 业务开发重点关注
+业务开发主要关注两个目录：
+1. **module/**: 包含业务模块的核心实现
+2. **src/**: 业务Web项目入口（通常只需配置，不需要修改）
+
+## 🔄 分层架构详解
+
+每个业务模块遵循以下分层结构：
+
+### 1. Domain.Shared 层
+共享领域层，包含枚举、常量、异常等可在所有层使用的内容。
+
+```
+module/demo/Demo.Domain.Shared/
+├── Enums/           # 枚举定义
+├── Constants/       # 常量定义
+├── Exceptions/      # 异常定义
+└── DemoDomainSharedModule.cs  # 模块定义
+```
+
+### 2. Domain 层
+领域层，实现核心业务逻辑，包含实体、聚合根、领域服务、领域事件等。
+
+```
+module/demo/Demo.Domain/
+├── Entities/        # 实体和聚合根定义
+│   ├── BookAggregateRoot.cs
+│   └── LibraryAggregateRoot.cs
+├── Events/          # 领域事件定义
+│   ├── BookCreatedEvent.cs
+│   ├── BookUpdatedEvent.cs
+│   └── BookDeletedEvent.cs
+├── EventHandlers/   # 领域事件处理器
+│   └── BookCreatedEventHandler.cs
+├── Services/        # 领域服务
+└── DemoDomainModule.cs  # 模块定义
+```
+
+### 3. Application.Contracts 层
+应用契约层，定义DTO和应用服务接口。
+
+```
+module/demo/Demo.Application.Contracts/
+├── Dtos/           # 数据传输对象
+│   ├── BookDto.cs
+│   ├── CreateBookDto.cs
+│   └── UpdateBookDto.cs
+├── IServices/      # 应用服务接口
+│   ├── IBookAppService.cs
+│   └── ILibraryAppService.cs
+└── DemoApplicationContractsModule.cs  # 模块定义
+```
+
+### 4. Application 层
+应用层，实现应用服务，协调领域对象完成用户用例。
+
+```
+module/demo/Demo.Application/
+├── Services/       # 应用服务实现
+│   ├── BookAppService.cs
+│   └── LibraryAppService.cs
+└── DemoApplicationModule.cs  # 模块定义
+```
+
+### 5. SqlSugarCore 层
+数据访问层，实现仓储和数据库上下文。
+
+```
+module/demo/Demo.SqlSugarCore/
+├── Repositories/   # 仓储实现
+├── DataSeeds/      # 数据种子
+│   └── BookStoreDataSeed.cs
+└── DemoSqlSugarCoreModule.cs  # 模块定义
+```
+
+## 🚀 快速开发示例：图书管理系统
+
+以下是开发一个完整的图书管理功能的步骤：
+
+### 1. 定义领域模型 (Domain 层)
+在 module/demo/Demo.Domain/Entities/BookAggregateRoot.cs 中定义图书聚合根
+
+### 2. 定义领域事件 (Domain 层)
+在 module/demo/Demo.Domain/Events/BookCreatedEvent.cs 中定义图书创建事件
+
+### 3. 实现事件处理器 (Domain 层)
+在 module/demo/Demo.Domain/EventHandlers/BookCreatedEventHandler.cs 中实现事件处理
+
+### 4. 定义DTO和应用服务接口 (Application.Contracts 层)
+在 module/demo/Demo.Application.Contracts/Dtos/BookDto.cs 中定义DTO
+在 module/demo/Demo.Application.Contracts/IServices/IBookAppService.cs 中定义接口
+
+### 5. 实现应用服务 (Application 层)
+在 module/demo/Demo.Application/Services/BookAppService.cs 中实现应用服务
+
+### 6. 配置数据访问 (SqlSugarCore 层)
+在 module/demo/Demo.SqlSugarCore/DataSeeds/BookStoreDataSeed.cs 中实现数据种子
+
+
+## 💡 开发最佳实践
+
+1. **领域驱动设计原则**
+   - 将业务逻辑集中在领域层
+   - 使用聚合根封装业务规则和状态变化
+   - 通过领域事件实现模块间的解耦
+
+2. **应用服务设计**
+   - 应用服务应该薄而简单，主要协调领域对象
+   - 使用DTO进行数据传输，避免直接暴露领域模型
+
+3. **仓储使用**
+   - 通过依赖注入获取仓储实例
+   - 使用框架提供的通用仓储方法，避免重复编写CRUD代码
+
+4. **事件驱动**
+   - 使用领域事件处理跨聚合根的业务逻辑
+   - 实现事件处理器处理异步操作和副作用
+
+## 🔧 常用开发工具和命令
+
+- **项目构建**: `dotnet build`
+- **运行项目**: `dotnet run --project src/Demo.Web`
+- **数据库迁移**: 框架使用SqlSugar，支持自动创建表结构
+
+## 📚 更多资源
+
+- 查看示例模块: `module/demo/`
+- 参考RBAC权限模块: `module/rbac/`
+- 参考文件管理模块: `module/filedock/`
+
+## 🎯 快速入门步骤总结
+
+1. 在Domain层定义实体和聚合根
+2. 在Domain.Shared层定义枚举和常量
+3. 在Application.Contracts层定义DTO和服务接口
+4. 在Application层实现应用服务
+5. 在SqlSugarCore层配置数据访问
+6. 启动Web项目，自动生成API接口
+
+按照以上步骤，您可以快速开发出符合DDD原则的业务功能模块。

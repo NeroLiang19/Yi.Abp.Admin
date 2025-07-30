@@ -1,0 +1,178 @@
+# Yi.Abp.Net8 工程结构
+
+## 项目概述
+本项目是基于Yi.Abp.Net8框架的公共服务平台，主要提供认证服务、权限管理、文件服务等公共功能模块。项目采用模块化设计，遵循DDD（领域驱动设计）架构思想。
+
+## 工程结构树
+
+```
+Yi.Abp.Net8/    # 项目根目录
+├── client/    # 客户端模块，提供API调用接口
+│   ├── Bi.Neware.PublicHub.Client.Console/    # 控制台客户端
+│   ├── Bi.Neware.PublicHub.Client.WebApi/    # WebApi客户端
+│   ├── Bi.Neware.PublicHub.HttpApi.Client/    # HTTP API客户端
+│   ├── Yi.Abp.Client.Console/    # Abp控制台客户端
+│   ├── Yi.Abp.Client.WebApi/    # Abp WebApi客户端
+│   └── Yi.Abp.HttpApi.Client/    # Abp HTTP API客户端
+│
+├── framework/    # 框架核心模块，提供基础设施
+│   ├── Yi.Framework.AspNetCore/    # ASP.NET Core集成
+│   ├── Yi.Framework.AspNetCore.Authentication.OAuth/    # OAuth认证
+│   ├── Yi.Framework.BackgroundWorkers.Hangfire/    # Hangfire后台任务
+│   ├── Yi.Framework.Caching.FreeRedis/    # FreeRedis缓存实现
+│   ├── Yi.Framework.Core/    # 核心功能模块
+│   │   ├── Data/    # 数据处理
+│   │   ├── Enums/    # 枚举定义
+│   │   ├── Extensions/    # 扩展方法
+│   │   ├── Helper/    # 辅助工具类
+│   │   ├── Json/    # JSON处理
+│   │   ├── Modularity/    # 模块化支持
+│   │   └── Options/    # 配置选项
+│   ├── Yi.Framework.Ddd.Application/    # DDD应用层
+│   ├── Yi.Framework.Ddd.Application.Contracts/    # DDD应用层契约
+│   ├── Yi.Framework.Mapster/    # Mapster对象映射
+│   ├── Yi.Framework.SqlSugarCore/    # SqlSugar ORM集成
+│   ├── Yi.Framework.SqlSugarCore.Abstractions/    # SqlSugar抽象层
+│   └── Yi.Framework.WeChat.MiniProgram/    # 微信小程序集成
+│
+├── module/    # 业务模块，包含各种功能模块
+│   ├── audit-logging/    # 审计日志模块
+│   │   ├── Yi.Framework.AuditLogging.Application/    # 审计日志应用层
+│   │   ├── Yi.Framework.AuditLogging.Application.Contracts/    # 审计日志应用层契约
+│   │   ├── Yi.Framework.AuditLogging.Domain/    # 审计日志领域层
+│   │   ├── Yi.Framework.AuditLogging.Domain.Shared/    # 审计日志共享领域层
+│   │   └── Yi.Framework.AuditLogging.SqlSugarCore/    # 审计日志数据访问层
+│   │
+│   ├── demo/    # 示例模块
+│   │   ├── Demo.Application/    # 示例应用层
+│   │   │   └── Services/    # 服务实现
+│   │   ├── Demo.Application.Contracts/    # 示例应用层契约
+│   │   ├── Demo.Domain/    # 示例领域层
+│   │   │   ├── Entities/    # 实体定义
+│   │   │   ├── EventHandlers/    # 事件处理器
+│   │   │   ├── Events/    # 领域事件
+│   │   │   └── Shared/    # 共享组件
+│   │   ├── Demo.Domain.Shared/    # 示例共享领域层
+│   │   │   ├── Enums/    # 枚举定义
+│   │   │   └── Settings/    # 设置定义
+│   │   └── Demo.SqlSugarCore/    # 示例数据访问层
+│   │       └── DataSeeds/    # 数据种子
+│   │
+│   ├── filedock/    # 文件服务模块
+│   │   ├── FileDock.Application/    # 文件服务应用层
+│   │   ├── FileDock.Application.Contracts/    # 文件服务应用层契约
+│   │   ├── FileDock.Domain/    # 文件服务领域层
+│   │   ├── FileDock.Domain.Shared/    # 文件服务共享领域层
+│   │   └── FileDock.SqlSugarCore/    # 文件服务数据访问层
+│   │
+│   ├── rbac/    # 角色权限管理模块
+│   │   ├── Yi.Framework.Rbac.Application/    # 权限管理应用层
+│   │   ├── Yi.Framework.Rbac.Application.Contracts/    # 权限管理应用层契约
+│   │   ├── Yi.Framework.Rbac.Domain/    # 权限管理领域层
+│   │   │   ├── Entities/    # 实体定义
+│   │   │   ├── EventHandlers/    # 事件处理器
+│   │   │   ├── Events/    # 领域事件
+│   │   │   └── Shared/    # 共享组件
+│   │   ├── Yi.Framework.Rbac.Domain.Shared/    # 权限管理共享领域层
+│   │   │   ├── Enums/    # 枚举定义
+│   │   │   └── Settings/    # 设置定义
+│   │   └── Yi.Framework.Rbac.SqlSugarCore/    # 权限管理数据访问层
+│   │
+│   ├── setting-management/    # 设置管理模块
+│   │   ├── Yi.Framework.SettingManagement.Application/    # 设置管理应用层
+│   │   ├── Yi.Framework.SettingManagement.Application.Contracts/    # 设置管理应用层契约
+│   │   ├── Yi.Framework.SettingManagement.Domain/    # 设置管理领域层
+│   │   └── Yi.Framework.SettingManagement.Domain.Shared/    # 设置管理共享领域层
+│   │
+│   └── tenant-management/    # 租户管理模块
+│       ├── Yi.Framework.TenantManagement.Application/    # 租户管理应用层
+│       ├── Yi.Framework.TenantManagement.Application.Contracts/    # 租户管理应用层契约
+│       ├── Yi.Framework.TenantManagement.Domain/    # 租户管理领域层
+│       ├── Yi.Framework.TenantManagement.Domain.Shared/    # 租户管理共享领域层
+│       └── Yi.Framework.TenantManagement.SqlSugarCore/    # 租户管理数据访问层
+│
+├── src/    # 应用程序源代码
+│   ├── .template.config/    # 模板配置
+│   ├── Demo.Web/    # 示例Web应用
+│   │   ├── Jobs/    # 后台任务
+│   │   │   └── rbac/    # 权限相关任务
+│   │   ├── logs/    # 日志目录
+│   │   │   ├── all/    # 所有日志
+│   │   │   └── error/    # 错误日志
+│   │   ├── Properties/    # 项目属性
+│   │   └── wwwroot/    # 静态资源
+│   │
+│   └── FileDock.Web/    # 文件服务Web应用
+│       ├── Jobs/    # 后台任务
+│       │   └── rbac/    # 权限相关任务
+│       ├── logs/    # 日志目录
+│       │   └── all/    # 所有日志
+│       ├── Properties/    # 项目属性
+│       └── wwwroot/    # 静态资源
+│           └── icon/    # 图标资源
+│
+├── test/    # 测试项目
+│   ├── Yi.Abp.Test/    # 基础测试项目
+│   │   └── example/    # 测试示例
+│   └── Yi.Framework.Rbac.Test/    # 权限管理测试项目
+│       └── System/    # 系统测试
+│
+└── tool/    # 工具项目
+    ├── Yi.Abp.Tool/    # Abp工具
+    │   └── Commands/    # 命令实现
+    ├── Yi.Abp.Tool.Application/    # 工具应用层
+    ├── Yi.Abp.Tool.Application.Contracts/    # 工具应用层契约
+    │   ├── Dtos/    # 数据传输对象
+    │   └── Enums/    # 枚举定义
+    ├── Yi.Abp.Tool.Domain/    # 工具领域层
+    ├── Yi.Abp.Tool.Domain.Shared/    # 工具共享领域层
+    │   ├── Dtos/    # 数据传输对象
+    │   ├── Enums/    # 枚举定义
+    │   └── Options/    # 配置选项
+    ├── Yi.Abp.Tool.HttpApi.Client/    # 工具HTTP API客户端
+    └── Yi.Abp.Tool.Web/    # 工具Web界面
+        └── Properties/    # 项目属性
+```
+
+## 模块说明
+### Yi框架总体分为以下3个部分：
+- Framework （Yi.Framework框架部分，基础设施）
+- Module（Yi.Framework提供的内置模块部分，例如Rbac、审计日志）
+- Src （真正业务进行开发的部分）
+
+### 核心框架模块
+- **framework**: 框架核心模块，提供基础设施和通用功能
+  - **Yi.Framework.Core**: 核心库，包含基础工具类、扩展方法和通用功能
+  - **Yi.Framework.AspNetCore**: ASP.NET Core集成，提供Web开发支持
+  - **Yi.Framework.Ddd.Application**: DDD应用层实现，处理业务逻辑
+  - **Yi.Framework.SqlSugarCore**: 数据访问层，基于SqlSugar ORM
+
+### 业务功能模块
+- **module/rbac**: 角色权限管理模块，实现用户、角色、权限管理
+- **module/audit-logging**: 审计日志模块，记录系统操作日志
+- **module/filedock**: 文件服务模块，处理文件上传下载等功能
+- **module/setting-management**: 设置管理模块，处理系统配置
+- **module/tenant-management**: 租户管理模块，支持多租户功能
+
+### 应用程序
+- **src/Demo.Web**: 示例Web应用，展示框架基本用法
+- **src/FileDock.Web**: 文件服务Web应用，提供文件管理功能
+
+### 客户端SDK
+- **client**: 客户端模块，提供多种客户端调用方式
+  - **Yi.Abp.HttpApi.Client**: HTTP API客户端，用于远程调用
+  - **Yi.Abp.Client.Console**: 控制台客户端，用于命令行操作
+
+### 工具支持
+- **tool**: 工具项目，提供开发和运维工具
+  - **Yi.Abp.Tool**: 命令行工具，支持代码生成等功能
+
+## 技术架构特点
+1. **模块化设计**: 采用模块化架构，各功能模块独立，便于维护和扩展
+2. **DDD架构**: 遵循领域驱动设计思想，清晰分离领域逻辑和应用逻辑
+3. **ORM集成**: 集成SqlSugar ORM，简化数据访问操作
+4. **缓存支持**: 集成FreeRedis，提供高性能缓存功能
+5. **后台任务**: 集成Hangfire，支持可靠的后台任务处理
+6. **微信集成**: 提供微信小程序集成支持
+7. **多租户**: 支持多租户应用开发
+8. **审计日志**: 内置审计日志功能，记录关键操作

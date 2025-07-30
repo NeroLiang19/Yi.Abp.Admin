@@ -7,6 +7,9 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace Demo.Domain.Entities
 {
+    /// <summary>
+    ///     图书实体类
+    /// </summary>
     [SugarTable("Book")]
     public class BookAggregateRoot : AuditedAggregateRoot<Guid>
     {
@@ -21,6 +24,6 @@ namespace Demo.Domain.Entities
         public float Price { get; set; }
 
         [SugarColumn(IsIgnore = true)]
-        public override ExtraPropertyDictionary ExtraProperties { get; protected set; }
+        public override ExtraPropertyDictionary ExtraProperties { get; protected set; }        
     }
 }

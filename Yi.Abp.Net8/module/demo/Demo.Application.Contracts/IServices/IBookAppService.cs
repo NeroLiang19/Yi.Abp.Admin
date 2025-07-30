@@ -8,9 +8,9 @@ namespace Demo.Application.Contracts.IServices
       IYiCrudAppService< //Defines CRUD methods
           BookDto, //Used to show books
           Guid, //Primary key of the book entity
-          PagedAndSortedResultRequestDto, //Used for paging/sorting
+          BookGetListInputVo, //Used for paging/sorting
           BookCreateUpdateDto> //Used to create/update a book
     {
-
+        Task<PagedResultDto<BookDto>> GetPageAsync(BookGetListInputVo input);
     }
 }

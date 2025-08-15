@@ -9,8 +9,8 @@ namespace Demo.Application.Contracts.Dtos.Book
 
         public BookTypeEnum Type { get; set; }
 
-        public DateTime PublishDate { get; set; }
+        public DateTime? PublishDate { get; set; }
 
-        public float Price { get; set; }
+        public float? Price { get; set; }
     }
 }

@@ -7,6 +7,8 @@ using SqlSugar;
 using Volo.Abp.Application.Dtos;
 using Yi.Framework.Ddd.Application;
 using Yi.Framework.SqlSugarCore.Abstractions;
+using Volo.Abp.ObjectMapping;
+using Demo.Application.Contracts.Dtos.Library;
 
 namespace Demo.Application.Services
 {
@@ -21,12 +23,41 @@ namespace Demo.Application.Services
     {
         private readonly ISqlSugarRepository<BookAggregateRoot, Guid> _repository;
         private readonly ILocalEventBus _localEventBus;
-        public BookAppService(ISqlSugarRepository<BookAggregateRoot, Guid> repository, ILocalEventBus localEventBus)
+
+        public BookAppService(
+            ISqlSugarRepository<BookAggregateRoot, Guid> repository,
+            ILocalEventBus localEventBus)
             : base(repository)
         {
             _repository = repository;
-            _localEventBus = localEventBus;
+            _localEventBus = localEventBus;            
         }
+
+        //// 重写基类的 MapToEntity 方法，使用我们自己的 _objectMapper
+        //protected override BookAggregateRoot MapToEntity(BookCreateUpdateDto createInput)
+        //{
+        //    var entity = new BookAggregateRoot();
+        //    ObjectMapper.Map(createInput, entity);
+        //    return entity;
+        //}
+
+        //// 重写基类的 MapToEntity 方法，使用我们自己的 _objectMapper
+        //protected override void MapToEntity(BookCreateUpdateDto updateInput, BookAggregateRoot entity)
+        //{
+        //    ObjectMapper.Map(updateInput, entity);
+        //}
+
+        //// 重写基类的 MapToGetOutputDto 方法，使用我们自己的 _objectMapper
+        //protected override BookDto MapToGetOutputDto(BookAggregateRoot entity)
+        //{
+        //    return ObjectMapper.Map<BookAggregateRoot, BookDto>(entity);
+        //}
+
+        //// 重写基类的 MapToGetListOutputDtosAsync 方法，使用我们自己的 _objectMapper
+        //protected override Task<List<BookDto>> MapToGetListOutputDtosAsync(List<BookAggregateRoot> entities)
+        //{
+        //    return Task.FromResult(entities.Select(e => ObjectMapper.Map<BookAggregateRoot, BookDto>(e)).ToList());
+        //}
 
         /// <summary>
         ///     获取列表

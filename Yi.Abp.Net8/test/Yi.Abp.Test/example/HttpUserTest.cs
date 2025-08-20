@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Yi.Abp.Test.example;
 
-public class HttpUser_Test : YiAbpTestWebBase
+public class HttpUserTest : YiAbpTestWebBase
 {
     [Fact]
     public void Http_Test()

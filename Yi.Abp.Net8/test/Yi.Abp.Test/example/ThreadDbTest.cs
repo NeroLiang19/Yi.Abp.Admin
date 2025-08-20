@@ -5,7 +5,7 @@ using Yi.Framework.SqlSugarCore.Abstractions;
 
 namespace Yi.Abp.Test.example;
 
-public class ThreadDb_Test : YiAbpTestBase
+public class ThreadDbTest : YiAbpTestBase
 {
     /// <summary>
     ///     工作单元
@@ -21,13 +21,18 @@ public class ThreadDb_Test : YiAbpTestBase
             // 创建10个任务但不立即执行
             for (var i = 0; i < 10; i++)
             {
-                var task = new Task(async () =>
+                var task = new Task(async void () =>
                 {
-                    using (var uow = uowManager.Begin())
+                    try
                     {
+                        using var uow = uowManager.Begin();
                         var rep = GetRequiredService<ISqlSugarRepository<UserAggregateRoot>>();
-                        var result = await rep.GetListAsync();
+                        _ = await rep.GetListAsync();
                         await uow.CompleteAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        Assert.Fail($"并发工作单元测试失败: {ex.Message}");
                     }
                 });
                 tasks.Add(task);

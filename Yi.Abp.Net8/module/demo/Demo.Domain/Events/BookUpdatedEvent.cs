@@ -35,7 +35,7 @@ namespace Demo.Domain.Events
             Changes = changes;
             
             // 尝试从变更集合中获取名称变更
-            if (changes != null && changes.TryGetValue("Name", out var nameChange))
+            if (changes.TryGetValue("Name", out var nameChange))
             {
                 NewName = nameChange.Item2?.ToString();
             }

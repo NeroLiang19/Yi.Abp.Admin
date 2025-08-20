@@ -27,7 +27,7 @@ public class YiAbpTestWebBase : YiAbpTestBase
         base.ConfigureServices(host, service);
     }
 
-    protected virtual void ConfigureHttpContext(HttpContext httpContext)
+    private void ConfigureHttpContext(HttpContext httpContext)
     {
         httpContext.Request.Path = "/test";
     }

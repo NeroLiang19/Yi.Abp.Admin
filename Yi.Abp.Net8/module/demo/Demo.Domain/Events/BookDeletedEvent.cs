@@ -22,7 +22,7 @@ namespace Demo.Domain.Events
         /// </summary>
         /// <param name="bookId">图书ID</param>
         /// <param name="reason">删除原因</param>
-        public BookDeletedEvent(Guid bookId, string reason = null)
+        public BookDeletedEvent(Guid bookId, string reason)
         {
             BookId = bookId;
             Reason = reason ?? "未指定原因";

@@ -46,6 +46,5 @@ public class YiFrameworkRbacTestBase : AbpTestBaseWithServiceProvider
     protected virtual void ConfigureAppConfiguration(IConfigurationBuilder configurationBuilder)
     {
         configurationBuilder.AddJsonFile("appsettings.json");
-        //configurationBuilder.AddJsonFile("appsettings.Development.json");
     }
 }

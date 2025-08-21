@@ -1,5 +1,4 @@
 using Demo.Application.Contracts.Dtos.Book;
-using Demo.Application.Contracts.IServices;
 using Demo.Application.Services;
 using Demo.Domain.Entities;
 using Demo.Domain.Events;
@@ -7,21 +6,47 @@ using Demo.Domain.Shared.Enums;
 using Moq;
 using Shouldly;
 using SqlSugar;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using Volo.Abp.Application.Dtos;
-using Volo.Abp.DependencyInjection;
 using Volo.Abp.EventBus.Local;
-using Volo.Abp.Guids;
 using Volo.Abp.ObjectMapping;
-using Volo.Abp.Uow;
 using Xunit;
 using Yi.Framework.SqlSugarCore.Abstractions;
 
-// 不再需要派生类，直接使用 BookAppService
-
 namespace Demo.Test.Application
 {
+    /// <summary>
+    /// 可测试的BookAppService，使用TestableBookAppServiceBase基类
+    /// </summary>
+    public class TestableBookAppService : TestableBookAppServiceBase
+    {
+        public TestableBookAppService(
+            ISqlSugarRepository<BookAggregateRoot, Guid> repository,
+            ILocalEventBus localEventBus) 
+            : base(repository, localEventBus)
+        {
+        }
+
+        protected override BookAggregateRoot MapToEntity(BookCreateUpdateDto createInput)
+        {
+            return GetObjectMapper().Map<BookCreateUpdateDto, BookAggregateRoot>(createInput);
+        }
+
+        protected override void MapToEntity(BookCreateUpdateDto updateInput, BookAggregateRoot entity)
+        {
+            GetObjectMapper().Map(updateInput, entity);
+        }
+
+        protected override BookDto MapToGetOutputDto(BookAggregateRoot entity)
+        {
+            return GetObjectMapper().Map<BookAggregateRoot, BookDto>(entity);
+        }
+
+        protected override Task<List<BookDto>> MapToGetListOutputDtosAsync(List<BookAggregateRoot> entities)
+        {
+            return Task.FromResult(entities.Select(e => GetObjectMapper().Map<BookAggregateRoot, BookDto>(e)).ToList());
+        }
+    }
+
     /// <summary>
     /// 图书应用服务测试类
     /// </summary>
@@ -30,46 +55,24 @@ namespace Demo.Test.Application
         private readonly Mock<ISqlSugarRepository<BookAggregateRoot, Guid>> _mockRepository;
         private readonly Mock<ILocalEventBus> _mockEventBus;
         private readonly Mock<IObjectMapper> _mockObjectMapper;
-        private readonly Mock<IAbpLazyServiceProvider> _mockLazyServiceProvider;
-        private readonly BookAppService _bookAppService;
+        private readonly TestableBookAppService _bookAppService;
 
         public BookAppServiceTests()
         {
             _mockRepository = new Mock<ISqlSugarRepository<BookAggregateRoot, Guid>>();
             _mockEventBus = new Mock<ILocalEventBus>();
             _mockObjectMapper = new Mock<IObjectMapper>();
-            _mockLazyServiceProvider = new Mock<IAbpLazyServiceProvider>();
 
-            // 创建被测服务实例
-            _bookAppService = new BookAppService(
+            // 创建可测试的服务实例
+            _bookAppService = new TestableBookAppService(
                 _mockRepository.Object,
                 _mockEventBus.Object)
             {
-                // 设置LazyServiceProvider
-                LazyServiceProvider = GetMockLazyServiceProvider()
+                TestObjectMapper = _mockObjectMapper.Object
             };
 
             // 配置对象映射行为
             SetupObjectMapper();
-        }
-
-        private IAbpLazyServiceProvider GetMockLazyServiceProvider()
-        {
-            // 配置LazyServiceProvider返回模拟对象
-            _mockLazyServiceProvider
-                .Setup(x => x.LazyGetService<IObjectMapper>())
-                .Returns(_mockObjectMapper.Object);
-
-            _mockLazyServiceProvider
-                .Setup(x => x.LazyGetService<IGuidGenerator>())
-                .Returns(SimpleGuidGenerator.Instance);
-
-            // 添加其他必要服务的模拟
-            _mockLazyServiceProvider
-                .Setup(x => x.LazyGetRequiredService<IUnitOfWorkManager>())
-                .Returns(Mock.Of<IUnitOfWorkManager>());
-
-            return _mockLazyServiceProvider.Object;
         }
 
         private void SetupObjectMapper()
@@ -77,19 +80,50 @@ namespace Demo.Test.Application
             // 配置实体-DTO映射
             _mockObjectMapper
              .Setup(m => m.Map<BookCreateUpdateDto, BookAggregateRoot>(It.IsAny<BookCreateUpdateDto>()))
-             .Returns((BookCreateUpdateDto dto) => new BookAggregateRoot());
+             .Returns((BookCreateUpdateDto dto) => new BookAggregateRoot(Guid.NewGuid(), dto.Name, dto.Type, dto.PublishDate, dto.Price));
 
             // 配置BookAggregateRoot -> BookDto映射
             _mockObjectMapper
                 .Setup(m => m.Map<BookAggregateRoot, BookDto>(It.IsAny<BookAggregateRoot>()))
-                .Returns((BookAggregateRoot entity) => new BookDto { Id = entity.Id });
+                .Returns((BookAggregateRoot entity) => new BookDto 
+                { 
+                    Id = entity.Id, 
+                    Name = entity.Name, 
+                    Type = entity.Type, 
+                    PublishDate = entity.PublishDate, 
+                    Price = entity.Price 
+                });
 
             // 配置列表映射
             _mockObjectMapper
                 .Setup(m => m.Map<List<BookAggregateRoot>, List<BookDto>>(It.IsAny<List<BookAggregateRoot>>()))
                 .Returns((List<BookAggregateRoot> entities) =>
-                    entities.ConvertAll(e => new BookDto { Id = e.Id }));
+                    entities.ConvertAll(e => new BookDto 
+                    { 
+                        Id = e.Id, 
+                        Name = e.Name, 
+                        Type = e.Type, 
+                        PublishDate = e.PublishDate, 
+                        Price = e.Price 
+                    }));
+
+            // 配置更新映射
+            _mockObjectMapper
+                .Setup(m => m.Map(It.IsAny<BookCreateUpdateDto>(), It.IsAny<BookAggregateRoot>()))
+                .Callback<object, object>((source, destination) => 
+                {
+                    var dto = source as BookCreateUpdateDto;
+                    var entity = destination as BookAggregateRoot;
+                    if (dto != null && entity != null)
+                    {
+                        entity.Name = dto.Name;
+                        entity.Type = dto.Type;
+                        entity.PublishDate = dto.PublishDate;
+                        entity.Price = dto.Price;
+                    }
+                });
         }
+
 
 
         /// <summary>
@@ -116,35 +150,6 @@ namespace Demo.Test.Application
 
             _mockRepository.Setup(r => r._DbQueryable).Returns(mockQueryable.Object);
 
-            // 配置对象映射 - 为列表项配置映射
-            _mockObjectMapper.Setup(m => m.Map<List<BookAggregateRoot>, List<BookDto>>(It.IsAny<List<BookAggregateRoot>>()))
-                .Returns((List<BookAggregateRoot> sourceList) => 
-                {
-                    var result = new List<BookDto>();
-                    foreach (var source in sourceList)
-                    {
-                        result.Add(new BookDto
-                        {
-                            Id = source.Id,
-                            Name = source.Name,
-                            Type = source.Type,
-                            PublishDate = source.PublishDate,
-                            Price = source.Price
-                        });
-                    }
-                    return result;
-                });
-                
-            // 配置单个实体映射
-            _mockObjectMapper.Setup(m => m.Map<BookAggregateRoot,BookDto>(It.IsAny<BookAggregateRoot>()))
-                .Returns((BookAggregateRoot source) => new BookDto
-                {
-                    Id = source.Id,
-                    Name = source.Name,
-                    Type = source.Type,
-                    PublishDate = source.PublishDate,
-                    Price = source.Price
-                });
 
             // Act
             var result = await _bookAppService.GetListAsync(new BookGetListInputVo());
@@ -182,35 +187,6 @@ namespace Demo.Test.Application
 
             _mockRepository.Setup(r => r._DbQueryable).Returns(mockQueryable.Object);
 
-            // 配置对象映射 - 为列表项配置映射
-            _mockObjectMapper.Setup(m => m.Map<List<BookAggregateRoot>, List<BookDto>>(It.IsAny<List<BookAggregateRoot>>()))
-                .Returns((List<BookAggregateRoot> sourceList) => 
-                {
-                    var result = new List<BookDto>();
-                    foreach (var source in sourceList)
-                    {
-                        result.Add(new BookDto
-                        {
-                            Id = source.Id,
-                            Name = source.Name,
-                            Type = source.Type,
-                            PublishDate = source.PublishDate,
-                            Price = source.Price
-                        });
-                    }
-                    return result;
-                });
-                
-            // 配置单个实体映射
-            _mockObjectMapper.Setup(m => m.Map<BookAggregateRoot, BookDto>(It.IsAny<BookAggregateRoot>()))
-                .Returns((BookAggregateRoot source) => new BookDto
-                {
-                    Id = source.Id,
-                    Name = source.Name,
-                    Type = source.Type,
-                    PublishDate = source.PublishDate,
-                    Price = source.Price
-                });
 
             // Act
             var result = await _bookAppService.GetPageAsync(new BookGetListInputVo { SkipCount = 0, MaxResultCount = 10 });
@@ -238,22 +214,12 @@ namespace Demo.Test.Application
                 Price = 29.99f
             };
 
-            //var createdBook = new BookAggregateRoot(Guid.NewGuid(), input.Name, input.Type, input.PublishDate, input.Price);
+            var createdBook = new BookAggregateRoot(Guid.NewGuid(), input.Name, input.Type, input.PublishDate, input.Price);
 
-            //// 模拟 InsertAsync 方法（基类使用的方法）
-            //_mockRepository.Setup(r => r.InsertAsync(It.IsAny<BookAggregateRoot>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
-            //    .ReturnsAsync(createdBook);
-                
-            //// 配置对象映射
-            //_mockObjectMapper.Setup(m => m.Map<BookAggregateRoot,BookDto>(It.IsAny<BookAggregateRoot>()))
-            //    .Returns((BookAggregateRoot source) => new BookDto
-            //    {
-            //        Id = source.Id,
-            //        Name = source.Name,
-            //        Type = source.Type,
-            //        PublishDate = source.PublishDate,
-            //        Price = source.Price
-            //    });
+            // 模拟 InsertAsync 方法（基类使用的方法）
+            _mockRepository.Setup(r => r.InsertAsync(It.IsAny<BookAggregateRoot>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(createdBook);
+              
 
             // Act
             var result = await _bookAppService.CreateAsync(input);
@@ -292,27 +258,6 @@ namespace Demo.Test.Application
             _mockRepository.Setup(r => r.UpdateAsync(It.IsAny<BookAggregateRoot>()))
                 .ReturnsAsync(true);
                 
-            // 配置更新后的对象映射
-            var updatedBook = new BookAggregateRoot(bookId, input.Name, input.Type, input.PublishDate, input.Price);
-            _mockObjectMapper.Setup(m => m.Map(It.IsAny<BookCreateUpdateDto>(), It.IsAny<BookAggregateRoot>()))
-                .Callback<object, object>((source, destination) => {
-                    var dto = source as BookCreateUpdateDto;
-                    var entity = destination as BookAggregateRoot;
-                    entity.Name = dto.Name;
-                    entity.Type = dto.Type;
-                    entity.PublishDate = dto.PublishDate;
-                    entity.Price = dto.Price;
-                });
-                
-            _mockObjectMapper.Setup(m => m.Map<BookAggregateRoot,BookDto>(It.IsAny<BookAggregateRoot>()))
-                .Returns((BookAggregateRoot source) => new BookDto
-                {
-                    Id = source.Id,
-                    Name = source.Name,
-                    Type = source.Type,
-                    PublishDate = source.PublishDate,
-                    Price = source.Price
-                });
 
             // Act
             var result = await _bookAppService.UpdateAsync(bookId, input);
